@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/nickforddesign/th-form/issues"
   },
-  "homepage": "https://github.com/nickforddesign/th-form#readme"
+  "homepage": "https://github.com/nickforddesign/th-form#readme",
+  "devDependencies": {
+    "webpack": "^4.17.1",
+    "webpack-dev-server": "^3.1.7"
+  }
 }

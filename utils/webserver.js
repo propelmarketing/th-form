@@ -10,8 +10,8 @@ const excludeEntriesToHotReload = config.notHotReload || []
 for (let entryName in config.entry) {
   if (!excludeEntriesToHotReload.includes(entryName)) {
     config.entry[entryName] = [
-      ('webpack-dev-server/client?http://localhost:' + env.PORT),
-      ('webpack/hot/dev-server')
+      `webpack-dev-server/client?http://localhost:${env.PORT}`,
+      `webpack/hot/dev-server'`
     ].concat(config.entry[entryName])
   }
 }

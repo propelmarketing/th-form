@@ -8,7 +8,7 @@ The chrome extension outputs a small script, to be added to the page with the cu
 ```html
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  new window.THForm(
+  new THForm(
     '#thrivehive-form18892',
     '9823hdd83-b342-4521-5434-23ec3341f85c',
     {
@@ -49,3 +49,11 @@ The corresponding ThriveHive form ID.
 
 # Development
 
+Start webpack dev server by running `npm start`, and go to the port specified, default is 6600. This
+can be changed via the `PORT` environment variable.
+
+# Production
+
+`npm run build` will run the webpack production build, and prod-ready bundles will write to the
+build folder. Note that the dev server uses the same folder, but only production builds should be
+published to the extension store.

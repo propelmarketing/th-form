@@ -24,7 +24,7 @@
       this.form_id = form_id
       this.init()
     }
-    
+
     init() {
       this.checkForTrackingScript()
       this.takeControlOfForm()
@@ -52,7 +52,7 @@
         this.addHiddenInputs
       )()
     }
-    
+
     compose(...fns) {
       return fns.reduceRight((f, g) => (...args) => f.call(this, g.call(this, ...args)))
     }
@@ -186,11 +186,11 @@
     }
 
     handleSuccess(e) {
-      console.log('success', e);
+      console.log('success', e)
     }
 
     handleError(e) {
-      console.warn('error', e);
+      console.warn('error', e)
     }
   }
 
@@ -209,16 +209,15 @@
     return encodeURIComponent(s).replace(/%20/g, '+')
   }
 
-  function urlencodeFormData(formdata){
+  function urlencodeFormData(formdata) {
     let s = ''
     for (let pair of formdata.entries()) {
       if (typeof pair[1] === 'string') {
         s += (s ? '&' : '') + encode(pair[0]) + '=' + encode(pair[1])
       }
     }
-    return s;
+    return s
   }
 
   context.THForm = THForm
-
 })(window)

@@ -13,7 +13,7 @@ const BUNDLE_SUFFIX = '.bundle.js'
 const options = {
   mode: env.NODE_ENV,
   entry: {
-    THForm: THFORM_PATH,
+    THForm: THFORM_PATH
   },
   output: {
     path: path.join(__dirname, 'build'),

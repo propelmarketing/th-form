@@ -8,7 +8,7 @@
 </head>
 <body>
   <style>
-    form#thrivehive-form18892 {
+    form {
       color: #000000;
       text-align: left;
       font-size: 1em;
@@ -16,20 +16,20 @@
       max-width: 50em;
     }
   
-    form#thrivehive-form18892 span.required-star {
+    form span.required-star {
       color: red;
     }
   
-    form#thrivehive-form18892 textarea {
+    form textarea {
       resize: vertical;
       height: 3.65em;
     }
   
-    form#thrivehive-form18892 li {
+    form li {
       list-style-type: none;
     }
   
-    form#thrivehive-form18892 input.hivesubmit {
+    form input.hivesubmit {
       color: white;
       background-color: #28738f;
       font-size: 1em;
@@ -50,17 +50,17 @@
   
     @media only screen and (min-width: 40.063em) {
       /* Float the submit button on the right, but not on small screen sizes, where it looks more natural on the left */
-      form#thrivehive-form18892 input.hivesubmit {
+      form input.hivesubmit {
         float: right;
       }
       /* Override the line items' left margin, which looks bad for checkboxes and radio options when to the right of the label
           On small screens their are below the label, in which case it actually looks good with the margin. */
-      form#thrivehive-form18892 ul li.hiveform-responsive-option {
+      form ul li.hiveform-responsive-option {
         margin-left: 0px;
       }
     }
   
-    form#thrivehive-form18892 .error-block {
+    form .error-block {
       min-height: 1.6em;
       clear: both;
       color: #E10707;
@@ -77,9 +77,7 @@
     }
   </style>
   
-  <!-- Forms have the 'novalidate' attribute to disable HTML5 validation, since they have their own javascript-based validation -->
-  <form class="hiveform" action="http://peach.thrivehive.com/webform/directformhandler" method="post" id="thrivehive-form18892" recaptchaenabled="false"
-    novalidate>
+  <form class="hiveform" action="http://peach.thrivehive.com/webform/directformhandler" method="post" id="thrivehive-form18892" recaptchaenabled="false" novalidate>
     <div class="row">
       <div class="small-12 medium-3 columns">
         <label for="form-field-1">Email
@@ -134,12 +132,14 @@
       document.head.appendChild(script);
     }
   </script>
+
   <script type="text/javascript">
     var domreadyScriptUrl = "http://my.thrivehive.com/content/js/domready.js";
     document.write(unescape("%3Cscript src%3D%27" + domreadyScriptUrl + "%27 type%3D'text/javascript'%3E%3C/script%3E"));
     var validateScriptUrl = "http://my.thrivehive.com/content/js/validate.min.js";
     document.write(unescape("%3Cscript src%3D%27" + validateScriptUrl + "%27 type%3D'text/javascript'%3E%3C/script%3E"));
   </script>
+
   <script type="text/javascript">
     window.thValidateCurrentFormDomId = "thrivehive-form18892";
     // The source code of th-validate.js, which expects the thValidateCurrentFormId global to be set
@@ -355,6 +355,7 @@
         }
       }
     })();
+    
     DomReady.ready(function () {
       // Avoid throwing an exception in the form preview pop-up due to $util not being available
       // if (window.$util) {

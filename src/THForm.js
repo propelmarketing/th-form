@@ -145,13 +145,13 @@
       return $el
     }
 
-    addHiddenInputs($el) {
+    addHiddenInputs() {
       const $form = this.$clone
       window.$util.SetFormHiddenID('CA-uid', $form.id)
       window.$util.SetFormSessionID('CA-sess', $form.id)
       window.$util.AddHiddenFieldInForm('meta.form-id', $form.id, this.form_id)
       window.$util.AddHiddenFieldInForm('meta.trackerid', $form.id, window.cat.GetTrackerID())
-      return $el
+      return this
     }
 
     appendToParent($el) {
@@ -161,6 +161,7 @@
 
     removeOriginalForm() {
       document.body.removeChild(this.$form)
+      return this
     }
 
     getFormData() {

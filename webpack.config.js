@@ -12,6 +12,7 @@ const BUNDLE_SUFFIX = '.bundle.js'
 
 const options = {
   mode: env.NODE_ENV,
+  devtool: 'cheap-module-eval-source-map',
   entry: {
     THForm: THFORM_PATH
   },
@@ -48,7 +49,7 @@ const options = {
       'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV)
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'tests', 'form.ejs'),
+      template: path.join(__dirname, 'examples', 'form.ejs'),
       filename: 'form.html',
       chunks: ['THForm'],
       inject: false,
@@ -60,10 +61,6 @@ const options = {
     }),
     new WriteFilePlugin()
   ]
-}
-
-if (env.NODE_ENV === 'development') {
-  options.devtool = 'cheap-module-eval-source-map'
 }
 
 module.exports = options

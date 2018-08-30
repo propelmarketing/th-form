@@ -3,11 +3,9 @@
   "version": "0.0.1",
   "description": "Script for instrumenting lead forms on ThriveHive customers' websites",
   "main": "src/THForm.js",
-  "directories": {
-    "test": "tests"
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "NODE_ENV=production node utils/build.js",
+    "start": "node utils/webserver.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +18,21 @@
   },
   "homepage": "https://github.com/nickforddesign/th-form#readme",
   "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/runtime": "^7.0.0",
+    "babel-eslint": "^9.0.0",
+    "babel-loader": "^8.0.0",
+    "chalk": "^2.4.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.2",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.17.1",
-    "webpack-dev-server": "^3.1.7"
+    "webpack-dev-middleware": "^3.2.0",
+    "webpack-dev-server": "^3.1.7",
+    "write-file-webpack-plugin": "^4.3.2"
   }
 }

@@ -4,6 +4,11 @@
     mappedInputs: []
   }
 
+  const REQUEST_HEADERS = [
+    'Content-Type',
+    'application/x-www-form-urlencoded'
+  ]
+
   const INPUT_RULES = {
     email: {
       type: 'email'
@@ -147,10 +152,12 @@
 
     addHiddenInputs() {
       const $form = this.$clone
-      window.$util.SetFormHiddenID('CA-uid', $form.id)
-      window.$util.SetFormSessionID('CA-sess', $form.id)
-      window.$util.AddHiddenFieldInForm('meta.form-id', $form.id, this.form_id)
-      window.$util.AddHiddenFieldInForm('meta.trackerid', $form.id, window.cat.GetTrackerID())
+      const $util = window.$util
+      const tracker_id = window.cat.GetTrackerID()
+      $util.SetFormHiddenID('CA-uid', $form.id)
+      $util.SetFormSessionID('CA-sess', $form.id)
+      $util.AddHiddenFieldInForm('meta.form-id', $form.id, this.form_id)
+      $util.AddHiddenFieldInForm('meta.trackerid', $form.id, tracker_id)
       return this
     }
 
@@ -170,20 +177,23 @@
     }
 
     request(url, method = 'GET', data) {
-      const request = new XMLHttpRequest()
-      request.open(method, url)
-      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-      request.send(data)
-      return request
+      return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest()
+        request.open(method, url)
+        request.setRequestHeader(...REQUEST_HEADERS)
+        request.send(data)
+        request.addEventListener('load', resolve)
+        request.addEventListener('error', reject)
+        return request
+      })
     }
 
     handleSubmit(e) {
       e.preventDefault()
       const data = this.getFormData()
-      const request = this.request(this.options.action, 'POST', data)
-
-      request.addEventListener('load', this.handleSuccess.bind(this))
-      request.addEventListener('error', this.handleError.bind(this))
+      this.request(this.options.action, 'POST', data)
+        .then(this.handleSuccess)
+        .catch(this.handleError)
     }
 
     handleSuccess(e) {
@@ -211,13 +221,14 @@
   }
 
   function urlencodeFormData(formdata) {
-    let s = ''
-    for (let pair of formdata.entries()) {
-      if (typeof pair[1] === 'string') {
-        s += (s ? '&' : '') + encode(pair[0]) + '=' + encode(pair[1])
-      }
-    }
-    return s
+    const tuples = [...formdata.entries()]
+    return tuples
+      .map(tuple => {
+        return tuple
+          .map(item => encode(item))
+          .join('=')
+      })
+      .join('&')
   }
 
   context.THForm = THForm

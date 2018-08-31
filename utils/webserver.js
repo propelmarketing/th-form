@@ -22,7 +22,7 @@ config.plugins = [new webpack.HotModuleReplacementPlugin()].concat(config.plugin
 
 const compiler = webpack(config)
 
-compiler.plugin('done', () => {
+compiler.hooks.done.tap('done_message', () => {
   console.log(chalk.blueBright(`Webpack dev server listening on port ${env.PORT}`))
 })
 

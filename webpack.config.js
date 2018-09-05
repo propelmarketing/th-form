@@ -10,14 +10,24 @@ const THFORM_FILENAME = 'THForm'
 const THFORM_PATH = path.join(__dirname, 'src', `${THFORM_FILENAME}.js`)
 const BUNDLE_SUFFIX = '.bundle.js'
 
+const ENV = env.NODE_ENV
+
+const OUTPUT_PATH = ENV === 'development'
+  ? 'build'
+  : 'dist'
+
+const DEVTOOL = ENV === 'development'
+  ? 'cheap-module-eval-source-map'
+  : false
+
 const options = {
   mode: env.NODE_ENV,
-  devtool: 'cheap-module-eval-source-map',
+  devtool: DEVTOOL,
   entry: {
     THForm: THFORM_PATH
   },
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, OUTPUT_PATH),
     filename: `[name]${BUNDLE_SUFFIX}`
   },
   module: {
@@ -43,7 +53,7 @@ const options = {
   plugins: [
     new FriendlyErrorsWebpackPlugin(),
     // clean the build folder
-    new CleanWebpackPlugin(['build']),
+    new CleanWebpackPlugin([OUTPUT_PATH]),
     // expose and write the allowed env consts on the compiled bundle
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV)

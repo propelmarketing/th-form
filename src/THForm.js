@@ -22,6 +22,11 @@
     }
   }
 
+  const STYLES = {
+    error_color: '#FF0000',
+    success_color: '#00FF00'
+  }
+
   class THForm {
     constructor(selector, form_id, options = {}) {
       this.options = Object.assign({}, DEFAULTS, options)
@@ -49,6 +54,7 @@
         this.resetRequired,
         this.mapInputs,
         this.convertInputs,
+        this.addContainers,
         this.bindEventListeners,
         this.wrapForm,
         this.unbindInlineEvents,
@@ -150,6 +156,44 @@
       return $el
     }
 
+    addContainers($el) {
+      this.$success = document.createElement('div')
+      this.$success.classList.add('th-form-message', 'success-container')
+      this.$success.innerHTML = 'Thanks! Your message has been received!'
+      this.$success.style.color = STYLES.success_color
+      this.hideElement(this.$success)
+
+      this.$error = document.createElement('div')
+      this.$error.classList.add('th-form-message', 'error-container')
+      this.$error.innerHTML = 'Oops! There was a problem submitting your message'
+      this.$error.style.color = STYLES.error_color
+      this.hideElement(this.$error)
+
+      this.$loading = document.createElement('div')
+      this.$loading.classList.add('th-form-loading')
+      this.$loading.innerHTML = 'Loading...'
+      this.hideElement(this.$loading)
+
+      $el.appendChild(this.$loading)
+      $el.appendChild(this.$success)
+      $el.appendChild(this.$error)
+      return $el
+    }
+
+    showElement(...$els) {
+      $els.map($el => {
+        $el.style.visibility = 'visible'
+      })
+      return $els
+    }
+
+    hideElement(...$els) {
+      $els.map($el => {
+        $el.style.visibility = 'hidden'
+      })
+      return $els
+    }
+
     addHiddenInputs() {
       const $form = this.$clone
       const $util = window.$util
@@ -190,18 +234,27 @@
 
     handleSubmit(e) {
       e.preventDefault()
+      this.hideElement(this.$success, this.$error)
       const data = this.getFormData()
+      this.showElement(this.$loading)
       this.request(this.options.action, 'POST', data)
-        .then(this.handleSuccess)
-        .catch(this.handleError)
+        .then((e) => {
+          this.handleSuccess(e)
+        })
+        .catch(() => {
+          this.handleError(e)
+        })
+        .then(this.hideElement(this.$loading))
     }
 
     handleSuccess(e) {
       console.log('success', e)
+      this.showElement(this.$success)
     }
 
     handleError(e) {
       console.warn('error', e)
+      this.showElement(this.$error)
     }
   }
 

@@ -50,9 +50,9 @@
   
     @media only screen and (min-width: 40.063em) {
       /* Float the submit button on the right, but not on small screen sizes, where it looks more natural on the left */
-      form input.hivesubmit {
+      /* form input.hivesubmit {
         float: right;
-      }
+      } */
       /* Override the line items' left margin, which looks bad for checkboxes and radio options when to the right of the label
           On small screens their are below the label, in which case it actually looks good with the margin. */
       form ul li.hiveform-responsive-option {
@@ -91,6 +91,21 @@
     <div class="row">
       <div class="small-12 columns">
         <div id="form-field-1-errors" class="error-block"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-12 medium-3 columns">
+        <label for="form-field-3">Phone
+          <span class="required-star">*</span>
+        </label>
+      </div>
+      <div class="small-12 medium-9 columns">
+        <input type="text" name="list.phone" id="form-field-3" required />
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-12 columns">
+        <div id="form-field-3-errors" class="error-block"></div>
       </div>
     </div>
     <div class="row">
@@ -286,8 +301,6 @@
         function validationCallback(errors, event) {
           // Clear any error messages from previous validation rounds
           $form.find('.error-block').html('');
-          $('.success-block').hide();
-          $('.failure-block').hide();
           if (errors.length) {
             $.each(errors, function (i, error) {
               // If we have no field name, reword the message slightly to make it better
@@ -303,29 +316,6 @@
           } else {
             postFormData()
           }
-        }
-  
-        function postFormData() {
-          return $.post({
-            url: $('form.hiveform').attr('action'),
-            data: $('form.hiveform').serialize()
-            // headers: {
-            //   'X-Requested-With': 'XMLHttpRequest'
-            // }
-          })
-          .done(function(response) {
-            $('.success-block').show();
-          })
-          .fail(function(response) {
-            $('.failure-block').show();
-          })
-          // .always(function(response) {
-          //   if (typeof response === 'string' && response.includes('unable')) {
-          //     $('.failure-block').show();
-          //   } else {
-          //     $('.success-block').show();
-          //   }
-          // });
         }
   
         function getFieldIdForInputElement(elem) {
@@ -395,26 +385,24 @@
   <script src="<%= scriptSrc %>"></script>
   
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    new window.THForm(
-      '#thrivehive-form18892',
-      '1fda2ea7-a281-4938-8429-83ec3591f85a',
-      {
+    document.addEventListener('DOMContentLoaded', function() {
+      new THForm('#thrivehive-form18892', '1fda2ea7-a281-4938-8429-83ec3591f85a', {
         mappedInputs: [
           {
             name: 'list.email',
-            newName: 'email',
             required: true
           },
           {
-            name: 'list.last_name',
-            newName: 'phone',
+            name: 'list.phone',
             required: true
+          },
+          {
+            name: 'phone',
+            newName: 'last_name'
           }
         ]
-      }
-    );
-  });
+      });
+    });
   </script>
 </body>
 </html>

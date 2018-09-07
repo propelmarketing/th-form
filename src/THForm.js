@@ -211,7 +211,7 @@
     }
 
     removeOriginalForm() {
-      document.body.removeChild(this.$form)
+      this.$form.parentNode.removeChild(this.$form)
       return this
     }
 

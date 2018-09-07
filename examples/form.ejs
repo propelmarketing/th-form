@@ -122,6 +122,19 @@
       </div>
     </div>
     <div class="row">
+      <div class="small-12 medium-3 columns">
+        <label for="form-field-4">Comments</label>
+      </div>
+      <div class="small-12 medium-9 columns">
+        <textarea name="list.comments" id="form-field-4"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-12 columns">
+        <div id="form-field-2-errors" class="error-block"></div>
+      </div>
+    </div>
+    <div class="row">
       <div class="small-12 columns">
         <input type="hidden" name="meta.redirectUrl" id="meta_redirectUrl" value="https://www.marketingmadesimple.org/thank-you" />
         <input type="submit" value="Submit" class="hivesubmit" />
@@ -385,24 +398,20 @@
   <script src="<%= scriptSrc %>"></script>
   
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      new THForm('#thrivehive-form18892', '1fda2ea7-a281-4938-8429-83ec3591f85a', {
-        mappedInputs: [
-          {
-            name: 'list.email',
-            required: true
-          },
-          {
-            name: 'list.phone',
-            required: true
-          },
-          {
-            name: 'phone',
-            newName: 'last_name'
-          }
-        ]
-      });
+  document.addEventListener('DOMContentLoaded', function() {
+    new THForm('#thrivehive-form18892', '1fda2ea7-a281-4938-8429-83ec3591f85a', {
+      mappedInputs: [
+        {
+          name: 'list.email',
+          required: true
+        },
+        {
+          name: 'list.phone',
+          required: true
+        }
+      ]
     });
+  });
   </script>
 </body>
 </html>

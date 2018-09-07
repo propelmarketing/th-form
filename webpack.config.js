@@ -69,6 +69,17 @@ const options = {
         }
       }
     }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'examples', 'wix.ejs'),
+      filename: 'wix.html',
+      chunks: ['THForm'],
+      inject: false,
+      templateParameters(compilation, assets, _options) {
+        return {
+          scriptSrc: `./${THFORM_FILENAME}${BUNDLE_SUFFIX}`
+        }
+      }
+    }),
     new WriteFilePlugin()
   ]
 }

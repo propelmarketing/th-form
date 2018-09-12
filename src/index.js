@@ -3,13 +3,24 @@ import * as templates from './templates'
 import * as utils from './utils'
 import {
   DEFAULTS,
-  REQUEST_HEADERS,
   INPUT_RULES,
   MESSAGES
 } from './constants'
 
 ((context) => {
+  /**
+   * Instrument customer lead forms in-place
+   *
+   * @class THForm
+   */
   class THForm {
+    /**
+     * Creates an instance of THForm.
+     * @param {*} selector
+     * @param {*} form_id
+     * @param {*} [options={}]
+     * @memberof THForm
+     */
     constructor(selector, form_id, options = {}) {
       this.options = Object.assign({}, DEFAULTS, options)
       this.selector = selector
@@ -17,7 +28,8 @@ import {
       this.init()
     }
 
-    init() {
+    async init() {
+      await utils.ready(this.options.delay)
       this.checkForTrackingScript()
       this.takeControlOfForm()
     }
@@ -210,27 +222,12 @@ import {
       return serialize(this.$clone)
     }
 
-    request(url, method = 'GET', data) {
-      return new Promise((resolve, reject) => {
-        const request = new XMLHttpRequest()
-        request.addEventListener('load', resolve)
-        request.addEventListener('error', (e) => {
-          console.log('err!')
-          reject(e)
-        })
-        request.open(method, url)
-        request.setRequestHeader(...REQUEST_HEADERS)
-        request.send(data)
-        return request
-      })
-    }
-
     handleSubmit(e) {
       e.preventDefault()
       this.hideElement(this.$success, this.$error)
       const data = this.getFormData()
       this.showElement(this.$loading)
-      this.request(this.options.action, 'POST', data)
+      utils.request(this.options.action, 'POST', data)
         .then((e) => {
           this.handleSuccess(e)
         })

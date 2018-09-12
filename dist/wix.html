@@ -182,13 +182,13 @@
     }
 
     .style-j8j9rujw button,
-    .style-j8j9rujw input,
+    .style-j8j9rujw input[type="text"], input[type="email"], input[type="tel"],
     .style-j8j9rujw textarea {
       box-sizing: border-box;
       border-radius: 5px;
     }
 
-    .style-j8j9rujw input,
+    .style-j8j9rujw input[type="text"], input[type="email"], input[type="tel"],
     .style-j8j9rujw textarea {
       background-color: rgba(61, 155, 233, 1);
       font: normal normal normal 16px/1.4em museo-slab-w01-100, serif;
@@ -201,7 +201,7 @@
       width: 100%;
     }
 
-    .style-j8j9rujw input.style-j8j9rujw_error,
+    .style-j8j9rujw input[type="text"], input[type="email"], input[type="tel"].style-j8j9rujw_error,
     .style-j8j9rujw textarea.style-j8j9rujw_error {
       border: 1px solid #E21C21;
       color: #E21C21;
@@ -304,49 +304,49 @@
       height: 130px;
     }
 
-    .style-j8j9rujw input::-webkit-input-placeholder,
+    .style-j8j9rujw input[type="text"], input[type="email"], input[type="tel"]::-webkit-input-placeholder,
     .style-j8j9rujw textarea::-webkit-input-placeholder {
       color: #FFFFFF;
       font: normal normal normal 16px/1.4em museo-slab-w01-100, serif;
     }
 
-    .style-j8j9rujw input:-ms-input-placeholder,
+    .style-j8j9rujw input[type="text"], input[type="email"], input[type="tel"]:-ms-input-placeholder,
     .style-j8j9rujw textarea:-ms-input-placeholder {
       color: #FFFFFF;
       font: normal normal normal 16px/1.4em museo-slab-w01-100, serif;
     }
 
-    .style-j8j9rujw input::-ms-input-placeholder,
+    .style-j8j9rujw input[type="text"], input[type="email"], input[type="tel"]::-ms-input-placeholder,
     .style-j8j9rujw textarea::-ms-input-placeholder {
       color: #FFFFFF;
       font: normal normal normal 16px/1.4em museo-slab-w01-100, serif;
     }
 
-    .style-j8j9rujw input::placeholder,
+    .style-j8j9rujw input[type="text"], input[type="email"], input[type="tel"]::placeholder,
     .style-j8j9rujw textarea::placeholder {
       color: #FFFFFF;
       font: normal normal normal 16px/1.4em museo-slab-w01-100, serif;
     }
 
-    .style-j8j9rujw input::-webkit-input-placeholder.style-j8j9rujw_error,
+    .style-j8j9rujw input[type="text"], input[type="email"], input[type="tel"]::-webkit-input-placeholder.style-j8j9rujw_error,
     .style-j8j9rujw textarea::-webkit-input-placeholder.style-j8j9rujw_error {
       color: #E21C21;
       font: normal normal normal 16px/1.4em museo-slab-w01-100, serif;
     }
 
-    .style-j8j9rujw input:-ms-input-placeholder.style-j8j9rujw_error,
+    .style-j8j9rujw input[type="text"], input[type="email"], input[type="tel"]:-ms-input-placeholder.style-j8j9rujw_error,
     .style-j8j9rujw textarea:-ms-input-placeholder.style-j8j9rujw_error {
       color: #E21C21;
       font: normal normal normal 16px/1.4em museo-slab-w01-100, serif;
     }
 
-    .style-j8j9rujw input::-ms-input-placeholder.style-j8j9rujw_error,
+    .style-j8j9rujw input[type="text"], input[type="email"], input[type="tel"]::-ms-input-placeholder.style-j8j9rujw_error,
     .style-j8j9rujw textarea::-ms-input-placeholder.style-j8j9rujw_error {
       color: #E21C21;
       font: normal normal normal 16px/1.4em museo-slab-w01-100, serif;
     }
 
-    .style-j8j9rujw input::placeholder.style-j8j9rujw_error,
+    .style-j8j9rujw input[type="text"], input[type="email"], input[type="tel"]::placeholder.style-j8j9rujw_error,
     .style-j8j9rujw textarea::placeholder.style-j8j9rujw_error {
       color: #E21C21;
       font: normal normal normal 16px/1.4em museo-slab-w01-100, serif;
@@ -528,6 +528,10 @@
           </li>
           <li class="style-j8j9rujw_col style-j8j9rujw_right"><textarea name="Message" class="style-j8j9rujwfieldMessage"
               placeholder="Message" data-aid="messageField" id="comp-ig96p4glfieldMessage"></textarea></li>
+          <li>
+            <input type="checkbox" checked id="check" name="allow">
+            <label for="check">Send me emails</label>
+          </li>
         </ul>
         <div class="style-j8j9rujw_foot"><span aria-live="polite" class="style-j8j9rujw_success style-j8j9rujwnotifications"
             id="comp-ig96p4glnotifications"></span><button type="submit" id="comp-ig96p4glsubmit" class="style-j8j9rujwsubmit">Send</button></div>
@@ -556,8 +560,28 @@
   </script>
   
   <script src="./THForm.bundle.js"></script>
-
+  
   <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    new THForm('#comp-ig96p4glform-wrapper', 'null', {
+      mappedInputs: [
+        {
+          name: 'Name',
+          required: true
+        },
+        {
+          name: 'Email',
+          required: true
+        },
+        {
+          name: 'allow',
+          required: true
+        }
+      ]
+    });
+  });
+  </script>
+  <!-- <script>
   document.addEventListener('DOMContentLoaded', function() {
     new THForm('#comp-ig96p4glform-wrapper', 'null', {
       mappedInputs: [
@@ -572,7 +596,7 @@
       ]
     });
   });
-  </script>
+  </script> -->
 </body>
 
 </html>

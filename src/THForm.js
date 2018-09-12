@@ -1,3 +1,5 @@
+import serialize from 'form-serialize'
+
 ((context) => {
   const DEFAULTS = {
     action: '//krool.thrivehive.com/webform/directFormHandler',
@@ -182,14 +184,14 @@
 
     showElement(...$els) {
       $els.map($el => {
-        $el.style.visibility = 'visible'
+        $el.style.display = 'block'
       })
       return $els
     }
 
     hideElement(...$els) {
       $els.map($el => {
-        $el.style.visibility = 'hidden'
+        $el.style.display = 'none'
       })
       return $els
     }
@@ -216,8 +218,7 @@
     }
 
     getFormData() {
-      const data = new FormData(this.$clone)
-      return urlencodeFormData(data)
+      return serialize(this.$clone)
     }
 
     request(url, method = 'GET', data) {
@@ -258,31 +259,27 @@
     }
   }
 
-  function includes(arrOrString, value) {
-    return arrOrString.indexOf(value) !== -1
-  }
-
   function getInputRules(name) {
     const key = Object.keys(INPUT_RULES).find(rule => {
-      return includes(name, rule)
+      return name.includes(rule)
     })
     return INPUT_RULES[key] || {}
   }
 
-  function encode(s) {
-    return encodeURIComponent(s).replace(/%20/g, '+')
-  }
+  // function encode(s) {
+  //   return encodeURIComponent(s).replace(/%20/g, '+')
+  // }
 
-  function urlencodeFormData(formdata) {
-    const tuples = [...formdata.entries()]
-    return tuples
-      .map(tuple => {
-        return tuple
-          .map(item => encode(item))
-          .join('=')
-      })
-      .join('&')
-  }
+  // function urlencodeFormData(formdata) {
+  //   const tuples = [...formdata.entries()]
+  //   return tuples
+  //     .map(tuple => {
+  //       return tuple
+  //         .map(item => encode(item))
+  //         .join('=')
+  //     })
+  //     .join('&')
+  // }
 
   context.THForm = THForm
 })(window)

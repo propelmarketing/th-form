@@ -42,6 +42,7 @@
     "write-file-webpack-plugin": "^4.3.2"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0"
+    "@babel/polyfill": "^7.0.0",
+    "form-serialize": "^0.7.2"
   }
 }

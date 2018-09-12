@@ -1,3 +1,28 @@
-.th-form-validation {
+$color-status-success: #32bb95;
+$color-status-error: #e4154e;
+
+@mixin messageBox($base-color) {
+  color: darken($base-color, 0.6);
+  background-color: transparentize($base-color, 0.6);
+  border: 1px solid $base-color;
+}
+
+.th-form-wrapper {
+  .th-form-validation {
+    &.message {
+      display: inline-block;
+      padding: 6px 8px;
+      border-radius: 3px;
   
+      &.success {
+        @include messageBox($color-status-success);
+      }
+      &.error {
+        @include messageBox($color-status-error);
+      }
+    }
+  }
+  .hidden {
+    display: none;
+  }
 }

@@ -1,38 +1,14 @@
 import serialize from 'form-serialize'
 import * as templates from './templates'
 import * as utils from './utils'
+import {
+  DEFAULTS,
+  REQUEST_HEADERS,
+  INPUT_RULES,
+  MESSAGES
+} from './constants'
 
 ((context) => {
-  const DEFAULTS = {
-    action: '//krool.thrivehive.com/webform/directFormHandler',
-    mappedInputs: []
-  }
-
-  const REQUEST_HEADERS = [
-    'Content-Type',
-    'application/x-www-form-urlencoded'
-  ]
-
-  const INPUT_RULES = {
-    email: {
-      type: 'email'
-    },
-    phone: {
-      type: 'tel',
-      pattern: '[\\d\\s\\(\\)\\-\\+]*'
-    },
-    zip: {
-      pattern: '[\\d\\s\\-]*'
-    }
-  }
-
-  const MESSAGES = {
-    success: 'Thanks! Your message has been received!',
-    error: 'Oops! There was a problem submitting your message',
-    catracker: 'Unable to track form, missing catracker.js. ' +
-      'https://my.thrivehive.com/#settings/tracking/tracking-code'
-  }
-
   class THForm {
     constructor(selector, form_id, options = {}) {
       this.options = Object.assign({}, DEFAULTS, options)
@@ -64,8 +40,8 @@ import * as utils from './utils'
         this.bindEventListeners,
         this.wrapForm,
         this.unbindInlineEvents,
-        this.appendToParent,
         this.removeOriginalForm,
+        this.appendToParent,
         this.addHiddenInputs,
         this.injectStylesheet
       )()
@@ -107,7 +83,7 @@ import * as utils from './utils'
 
     wrapForm($el) {
       const $wrapper = document.createElement('div')
-      $wrapper.classList.add('form-wrapper')
+      $wrapper.classList.add('th-form-wrapper')
       $wrapper.appendChild($el)
       return $wrapper
     }
@@ -187,14 +163,16 @@ import * as utils from './utils'
 
     showElement(...$els) {
       $els.map($el => {
-        $el.style.display = 'block'
+        $el.classList.remove('hidden')
+        // $el.style.display = 'block'
       })
       return $els
     }
 
     hideElement(...$els) {
       $els.map($el => {
-        $el.style.display = 'none'
+        $el.classList.add('hidden')
+        // $el.style.display = 'none'
       })
       return $els
     }
@@ -235,11 +213,14 @@ import * as utils from './utils'
     request(url, method = 'GET', data) {
       return new Promise((resolve, reject) => {
         const request = new XMLHttpRequest()
+        request.addEventListener('load', resolve)
+        request.addEventListener('error', (e) => {
+          console.log('err!')
+          reject(e)
+        })
         request.open(method, url)
         request.setRequestHeader(...REQUEST_HEADERS)
         request.send(data)
-        request.addEventListener('load', resolve)
-        request.addEventListener('error', reject)
         return request
       })
     }

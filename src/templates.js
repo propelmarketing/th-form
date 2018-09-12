@@ -11,7 +11,7 @@ export const stylesheet = () => {
 
 export const successMessage = (message) => {
   return html`
-    <div class="th-form-validation message-success">
+    <div class="th-form-validation message success">
       ${message}
     </div>
   `
@@ -19,7 +19,7 @@ export const successMessage = (message) => {
 
 export const errorMessage = (message) => {
   return html`
-    <div class="th-form-validation message-error">
+    <div class="th-form-validation message error">
       ${message}
     </div>
   `

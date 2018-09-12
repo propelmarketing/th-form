@@ -1,4 +1,6 @@
 import serialize from 'form-serialize'
+import * as templates from './templates'
+import * as utils from './utils'
 
 ((context) => {
   const DEFAULTS = {
@@ -24,9 +26,11 @@ import serialize from 'form-serialize'
     }
   }
 
-  const STYLES = {
-    error_color: '#FF0000',
-    success_color: '#00FF00'
+  const MESSAGES = {
+    success: 'Thanks! Your message has been received!',
+    error: 'Oops! There was a problem submitting your message',
+    catracker: 'Unable to track form, missing catracker.js. ' +
+      'https://my.thrivehive.com/#settings/tracking/tracking-code'
   }
 
   class THForm {
@@ -44,7 +48,7 @@ import serialize from 'form-serialize'
 
     checkForTrackingScript() {
       if (!window.CATracker || !window.cat || !window.$util) {
-        throw new Error('Unable to bind ThriveHive form, missing catracker.js')
+        throw new ReferenceError(MESSAGES.catracker)
       }
     }
 
@@ -62,7 +66,8 @@ import serialize from 'form-serialize'
         this.unbindInlineEvents,
         this.appendToParent,
         this.removeOriginalForm,
-        this.addHiddenInputs
+        this.addHiddenInputs,
+        this.injectStylesheet
       )()
     }
 
@@ -150,7 +155,7 @@ import serialize from 'form-serialize'
     convertInputs($el) {
       const $inputs = $el.querySelectorAll('input')
       $inputs.forEach($input => {
-        const rules = getInputRules($input.name)
+        const rules = utils.getInputRules($input.name, INPUT_RULES)
         for (let key in rules) {
           $input.setAttribute(key, rules[key])
         }
@@ -159,26 +164,24 @@ import serialize from 'form-serialize'
     }
 
     addContainers($el) {
-      this.$success = document.createElement('div')
-      this.$success.classList.add('th-form-message', 'success-container')
-      this.$success.innerHTML = 'Thanks! Your message has been received!'
-      this.$success.style.color = STYLES.success_color
+      this.$success = utils.htmlToNode(
+        templates.successMessage(MESSAGES.success)
+      )
+      this.$error = utils.htmlToNode(
+        templates.errorMessage(MESSAGES.error)
+      )
+      this.$loading = utils.htmlToNode(
+        templates.loading('Loading...')
+      )
+
       this.hideElement(this.$success)
-
-      this.$error = document.createElement('div')
-      this.$error.classList.add('th-form-message', 'error-container')
-      this.$error.innerHTML = 'Oops! There was a problem submitting your message'
-      this.$error.style.color = STYLES.error_color
       this.hideElement(this.$error)
-
-      this.$loading = document.createElement('div')
-      this.$loading.classList.add('th-form-loading')
-      this.$loading.innerHTML = 'Loading...'
       this.hideElement(this.$loading)
 
       $el.appendChild(this.$loading)
       $el.appendChild(this.$success)
       $el.appendChild(this.$error)
+
       return $el
     }
 
@@ -205,6 +208,14 @@ import serialize from 'form-serialize'
       $util.AddHiddenFieldInForm('meta.form-id', $form.id, this.form_id)
       $util.AddHiddenFieldInForm('meta.trackerid', $form.id, tracker_id)
       return this
+    }
+
+    injectStylesheet() {
+      this.$clone.parentNode.appendChild(
+        utils.htmlToNode(
+          templates.stylesheet()
+        )
+      )
     }
 
     appendToParent($el) {
@@ -258,28 +269,6 @@ import serialize from 'form-serialize'
       this.showElement(this.$error)
     }
   }
-
-  function getInputRules(name) {
-    const key = Object.keys(INPUT_RULES).find(rule => {
-      return name.includes(rule)
-    })
-    return INPUT_RULES[key] || {}
-  }
-
-  // function encode(s) {
-  //   return encodeURIComponent(s).replace(/%20/g, '+')
-  // }
-
-  // function urlencodeFormData(formdata) {
-  //   const tuples = [...formdata.entries()]
-  //   return tuples
-  //     .map(tuple => {
-  //       return tuple
-  //         .map(item => encode(item))
-  //         .join('=')
-  //     })
-  //     .join('&')
-  // }
 
   context.THForm = THForm
 })(window)

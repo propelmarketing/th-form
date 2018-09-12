@@ -6,8 +6,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WriteFilePlugin = require('write-file-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
-const THFORM_FILENAME = 'THForm'
-const THFORM_PATH = path.join(__dirname, 'src', `${THFORM_FILENAME}.js`)
+const ENTRY_FILENAME = 'index'
+const ENTRY_PATH = path.join(__dirname, 'src', `${ENTRY_FILENAME}.js`)
+const OUTPUT_FILENAME = 'THForm'
 const BUNDLE_SUFFIX = '.bundle.js'
 
 const ENV = env.NODE_ENV
@@ -24,7 +25,7 @@ const options = {
   mode: env.NODE_ENV,
   devtool: DEVTOOL,
   entry: {
-    THForm: THFORM_PATH
+    THForm: ENTRY_PATH
   },
   output: {
     path: path.join(__dirname, OUTPUT_PATH),
@@ -36,6 +37,13 @@ const options = {
         test: /\.css$/,
         use: [
           'css-loader'
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'css-loader',
+          'sass-loader'
         ]
       },
       {
@@ -65,7 +73,7 @@ const options = {
       inject: false,
       templateParameters(compilation, assets, _options) {
         return {
-          scriptSrc: `./${THFORM_FILENAME}${BUNDLE_SUFFIX}`
+          scriptSrc: `./${OUTPUT_FILENAME}${BUNDLE_SUFFIX}`
         }
       }
     }),
@@ -76,7 +84,7 @@ const options = {
       inject: false,
       templateParameters(compilation, assets, _options) {
         return {
-          scriptSrc: `./${THFORM_FILENAME}${BUNDLE_SUFFIX}`
+          scriptSrc: `./${OUTPUT_FILENAME}${BUNDLE_SUFFIX}`
         }
       }
     }),

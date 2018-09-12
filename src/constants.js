@@ -1,5 +1,5 @@
 export const DEFAULTS = {
-  action: '//krool.thrivehive.com/webform/directFormHandler',
+  action: '//my.thrivehive.com/webform/directFormHandler',
   mappedInputs: []
 }
 

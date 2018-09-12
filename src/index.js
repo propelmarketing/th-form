@@ -40,8 +40,8 @@ import {
         this.bindEventListeners,
         this.wrapForm,
         this.unbindInlineEvents,
-        this.removeOriginalForm,
         this.appendToParent,
+        this.removeOriginalForm,
         this.addHiddenInputs,
         this.injectStylesheet
       )()

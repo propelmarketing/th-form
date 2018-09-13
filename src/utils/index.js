@@ -42,16 +42,17 @@ export function htmlToNode(html) {
  */
 export function request(url, method = 'GET', data) {
   return new Promise((resolve, reject) => {
-    const request = new XMLHttpRequest()
-    request.addEventListener('load', resolve)
-    request.addEventListener('error', (e) => {
-      console.log('err!')
-      reject(e)
-    })
-    request.open(method, url)
-    request.setRequestHeader(...REQUEST_HEADERS)
-    request.send(data)
-    return request
+    const xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = () => {
+      const status = xhr.status
+      return status && /^2/.test(status)
+        ? resolve(xhr)
+        : reject(xhr)
+    }
+    xhr.open(method, url)
+    xhr.setRequestHeader(...REQUEST_HEADERS)
+    xhr.send(data)
+    return xhr
   })
 }
 

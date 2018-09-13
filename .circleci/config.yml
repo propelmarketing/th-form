@@ -2,14 +2,14 @@ version: 2
 jobs:
   release-staging:
     docker:
-      - image: circleci/node:latest-browsers-legacy
+      - image: circleci/node:8.10.0
     working_directory: ~/th-form
     steps:
       - run:
           name: Install AWS CLI
           command: |
-            apt-get -y -qq update
-            apt-get -y -qq install python3.6
+            sudo apt-get -y -qq update
+            sudo apt-get -y -qq install python3.6
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
             python3.6 get-pip.py --user
             pip install awscli --upgrade --user
@@ -28,14 +28,14 @@ jobs:
             aws s3 sync ./blob/master/dist/THForm.bundle.js s3://th-form/THForm.js
   release-production:
     docker:
-      - image: circleci/node:latest-browsers-legacy
+      - image: circleci/node:8.10.0
     working_directory: ~/th-form
     steps:
       - run:
           name: Install AWS CLI
           command: |
-            apt-get -y -qq update
-            apt-get -y -qq install python3.6
+            sudo apt-get -y -qq update
+            sudo apt-get -y -qq install python3.6
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
             python3.6 get-pip.py --user
             pip install awscli --upgrade --user

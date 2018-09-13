@@ -14,7 +14,9 @@ jobs:
             sudo python get-pip.py --user
             pip install -q awscli --upgrade --user
             echo "export PATH=~/.local/bin:$PATH" >> ~/.profile
+            echo "export PATH=~/.local/bin:$PATH" >> ~/.bashrc
             source ~/.profile
+            source ~/.bashrc
       - run:
           name: Configure AWS CLI
           command: |
@@ -42,7 +44,9 @@ jobs:
             sudo python get-pip.py --user
             pip install -q awscli --upgrade --user
             echo "export PATH=~/.local/bin:$PATH" >> ~/.profile
+            echo "export PATH=~/.local/bin:$PATH" >> ~/.bashrc
             source ~/.profile
+            source ~/.bashrc
       - run:
           name: Configure AWS CLI
           command: |

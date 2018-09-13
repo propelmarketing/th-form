@@ -34,7 +34,7 @@ jobs:
       - run:
           name: Upload to S3
           command: |
-            aws s3 sync ./blob/master/dist/THForm.bundle.js s3://th-form/THForm.js
+            aws s3 sync ~/th-form/dist/THForm.bundle.js s3://th-form/THForm.js
   release-production:
     docker:
       - image: circleci/node:8.10.0
@@ -69,7 +69,7 @@ jobs:
       - run:
           name: Upload to S3
           command: |
-            aws s3 sync ./blob/master/dist/THForm.bundle.js s3://th-form/THForm.js
+            aws s3 sync ~/th-form/dist/THForm.bundle.js s3://th-form/THForm.js
 
 workflows:
   version: 2

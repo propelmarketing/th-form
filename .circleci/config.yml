@@ -11,12 +11,8 @@ jobs:
             sudo apt-get -y -qq update
             sudo apt-get -y -qq install python-pip libpython-dev
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            sudo python get-pip.py --user
-            pip install -q awscli --upgrade --user
-            echo "export PATH=~/.local/bin:$PATH" >> ~/.profile
-            echo "export PATH=~/.local/bin:$PATH" >> ~/.bashrc
-            source ~/.profile
-            source ~/.bashrc
+            sudo python get-pip.py
+            sudo pip install -q awscli --upgrade
       - run:
           name: Configure AWS CLI
           command: |
@@ -41,12 +37,8 @@ jobs:
             sudo apt-get -y -qq update
             sudo apt-get -y -qq install python-pip libpython-dev
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            sudo python get-pip.py --user
-            pip install -q awscli --upgrade --user
-            echo "export PATH=~/.local/bin:$PATH" >> ~/.profile
-            echo "export PATH=~/.local/bin:$PATH" >> ~/.bashrc
-            source ~/.profile
-            source ~/.bashrc
+            sudo python get-pip.py
+            sudo pip install -q awscli --upgrade
       - run:
           name: Configure AWS CLI
           command: |

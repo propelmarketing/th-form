@@ -11,8 +11,8 @@ jobs:
             sudo apt-get -y -qq update
             sudo apt-get -y -qq install python-pip libpython-dev
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            sudo python get-pip.py
-            pip install -q awscli --upgrade
+            sudo python get-pip.py --user
+            pip install -q awscli --upgrade --user
       - run:
           name: Configure AWS CLI
           command: |
@@ -37,8 +37,8 @@ jobs:
             sudo apt-get -y -qq update
             sudo apt-get -y -qq install python-pip libpython-dev
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            sudo python get-pip.py
-            pip install -q awscli --upgrade
+            sudo python get-pip.py --user
+            pip install -q awscli --upgrade --user
       - run:
           name: Configure AWS CLI
           command: |

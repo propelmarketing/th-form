@@ -5,6 +5,7 @@ jobs:
       - image: circleci/node:8.10.0
     working_directory: ~/th-form
     steps:
+      - checkout
       - run:
           name: Install AWS CLI
           command: |
@@ -31,6 +32,7 @@ jobs:
       - image: circleci/node:8.10.0
     working_directory: ~/th-form
     steps:
+      - checkout
       - run:
           name: Install AWS CLI
           command: |

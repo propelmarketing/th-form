@@ -77,8 +77,10 @@ workflows:
     jobs:
       - release-staging:
           filters:
+            tags:
+              only: /^v[0-9]+(\.[0-9]+)*QA/
             branches:
-              only: feature/circleci-deploy
+              ignore: /.*/
       - release-production:
           filters:
             tags:

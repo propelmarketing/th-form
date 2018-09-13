@@ -4,8 +4,30 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Page Title</title>
+  <title>WIX contact form example</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="./THForm.bundle.js"></script>
+  
+  <script>
+  new THForm('#comp-ig96p4glform-wrapper', 'null', {
+    delay: 2000,
+    mappedInputs: [
+      {
+        name: 'Name',
+        required: true
+      },
+      {
+        name: 'Email',
+        required: true
+      },
+      {
+        name: 'allow',
+        required: true
+      }
+    ]
+  });
+  </script>
 </head>
 
 <body>
@@ -559,28 +581,6 @@
   }
   </script>
   
-  <script src="./THForm.bundle.js"></script>
-  
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    new THForm('#comp-ig96p4glform-wrapper', 'null', {
-      mappedInputs: [
-        {
-          name: 'Name',
-          required: true
-        },
-        {
-          name: 'Email',
-          required: true
-        },
-        {
-          name: 'allow',
-          required: true
-        }
-      ]
-    });
-  });
-  </script>
   <!-- <script>
   document.addEventListener('DOMContentLoaded', function() {
     new THForm('#comp-ig96p4glform-wrapper', 'null', {

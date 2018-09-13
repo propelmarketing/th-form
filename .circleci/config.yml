@@ -6,52 +6,52 @@ jobs:
     working_directory: ~/th-form
     steps:
       - run:
-        name: Install AWS CLI
-        command: |
-          apt-get -y -qq update
-          apt-get -y -qq install python3.6
-          curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-          python3.6 get-pip.py --user
-          pip install awscli --upgrade --user
+          name: Install AWS CLI
+          command: |
+            apt-get -y -qq update
+            apt-get -y -qq install python3.6
+            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+            python3.6 get-pip.py --user
+            pip install awscli --upgrade --user
       - run:
-        name: Configure AWS CLI
-        command: |
-          aws configure set aws_access_key_id $QA_AWS_ACCESS_KEY_ID
-          aws configure set aws_secret_access_key $QA_AWS_SECRET_ACCESS_KEY
+          name: Configure AWS CLI
+          command: |
+            aws configure set aws_access_key_id $QA_AWS_ACCESS_KEY_ID
+            aws configure set aws_secret_access_key $QA_AWS_SECRET_ACCESS_KEY
       - run:
-        name: NPM Build
-        command: |
-          npm run build
+          name: NPM Build
+          command: |
+            npm run build
       - run:
-        name: Upload to S3
-        command: |
-          aws s3 sync ./blob/master/dist/THForm.bundle.js s3://th-form/THForm.js
+          name: Upload to S3
+          command: |
+            aws s3 sync ./blob/master/dist/THForm.bundle.js s3://th-form/THForm.js
   release-production:
     docker:
       - image: circleci/node:latest-browsers-legacy
     working_directory: ~/th-form
     steps:
       - run:
-        name: Install AWS CLI
-        command: |
-          apt-get -y -qq update
-          apt-get -y -qq install python3.6
-          curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-          python3.6 get-pip.py --user
-          pip install awscli --upgrade --user
+          name: Install AWS CLI
+          command: |
+            apt-get -y -qq update
+            apt-get -y -qq install python3.6
+            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+            python3.6 get-pip.py --user
+            pip install awscli --upgrade --user
       - run:
-        name: Configure AWS CLI
-        command: |
-          aws configure set aws_access_key_id $PROD_AWS_ACCESS_KEY_ID
-          aws configure set aws_secret_access_key $PROD_AWS_SECRET_ACCESS_KEY
+          name: Configure AWS CLI
+          command: |
+            aws configure set aws_access_key_id $PROD_AWS_ACCESS_KEY_ID
+            aws configure set aws_secret_access_key $PROD_AWS_SECRET_ACCESS_KEY
       - run:
-        name: NPM Build
-        command: |
-          npm run build
+          name: NPM Build
+          command: |
+            npm run build
       - run:
-        name: Upload to S3
-        command: |
-          aws s3 sync ./blob/master/dist/THForm.bundle.js s3://th-form/THForm.js
+          name: Upload to S3
+          command: |
+            aws s3 sync ./blob/master/dist/THForm.bundle.js s3://th-form/THForm.js
 
 workflows:
   version: 2

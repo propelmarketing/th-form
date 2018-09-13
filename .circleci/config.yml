@@ -9,10 +9,10 @@ jobs:
           name: Install AWS CLI
           command: |
             sudo apt-get -y -qq update
-            sudo apt-get -y -qq install python3.6
+            sudo apt-get -y -qq install python-pip libpython-dev
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            python3.6 get-pip.py --user
-            pip install awscli --upgrade --user
+            sudo python get-pip.py
+            pip install -q awscli --upgrade
       - run:
           name: Configure AWS CLI
           command: |
@@ -35,10 +35,10 @@ jobs:
           name: Install AWS CLI
           command: |
             sudo apt-get -y -qq update
-            sudo apt-get -y -qq install python3.6
+            sudo apt-get -y -qq install python-pip libpython-dev
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            python3.6 get-pip.py --user
-            pip install awscli --upgrade --user
+            sudo python get-pip.py
+            pip install -q awscli --upgrade
       - run:
           name: Configure AWS CLI
           command: |

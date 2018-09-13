@@ -45,9 +45,11 @@ export function request(url, method = 'GET', data) {
     const xhr = new XMLHttpRequest()
     xhr.onreadystatechange = () => {
       const status = xhr.status
-      return status && /^2/.test(status)
-        ? resolve(xhr)
-        : reject(xhr)
+      if (status) {
+        return /^2/.test(status)
+          ? resolve(xhr)
+          : reject(xhr)
+      }
     }
     xhr.open(method, url)
     xhr.setRequestHeader(...REQUEST_HEADERS)

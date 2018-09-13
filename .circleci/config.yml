@@ -13,7 +13,7 @@ jobs:
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
             sudo python get-pip.py --user
             pip install -q awscli --upgrade --user
-            export PATH=~/.local/bin:$PATH
+            echo "export PATH=~/.local/bin:$PATH" >> ~/.profile
             source ~/.profile
       - run:
           name: Configure AWS CLI
@@ -41,7 +41,7 @@ jobs:
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
             sudo python get-pip.py --user
             pip install -q awscli --upgrade --user
-            export PATH=~/.local/bin:$PATH
+            echo "export PATH=~/.local/bin:$PATH" >> ~/.profile
             source ~/.profile
       - run:
           name: Configure AWS CLI

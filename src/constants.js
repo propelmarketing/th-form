@@ -1,4 +1,5 @@
 export const DEFAULTS = {
+  delay: 0,
   action: '//my.thrivehive.com/webform/directFormHandler',
   mappedInputs: []
 }

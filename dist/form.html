@@ -398,19 +398,18 @@
   <script src="./THForm.bundle.js"></script>
   
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    new THForm('#thrivehive-form18892', '1fda2ea7-a281-4938-8429-83ec3591f85a', {
-      mappedInputs: [
-        {
-          name: 'list.email',
-          required: true
-        },
-        {
-          name: 'list.phone',
-          required: true
-        }
-      ]
-    });
+  new THForm('#thrivehive-form18892', '1fda2ea7-a281-4938-8429-83ec3591f85a', {
+    // action: '//krool.thrivehive.com/webform/directFormHandler',
+    mappedInputs: [
+      {
+        name: 'list.email',
+        required: true
+      },
+      {
+        name: 'list.phone',
+        required: true
+      }
+    ]
   });
   </script>
 </body>

@@ -20,6 +20,14 @@ jobs:
             aws configure set aws_access_key_id $QA_AWS_ACCESS_KEY_ID
             aws configure set aws_secret_access_key $QA_AWS_SECRET_ACCESS_KEY
       - run:
+          name: Update NPM
+          command: |
+            sudo npm install -g npm@latest
+      - run:
+          name: Install Dependencies
+          command: |
+            npm install
+      - run:
           name: NPM Build
           command: |
             npm run build
@@ -50,6 +58,10 @@ jobs:
           name: Update NPM
           command: |
             sudo npm install -g npm@latest
+      - run:
+          name: Install Dependencies
+          command: |
+            npm install
       - run:
           name: NPM Build
           command: |

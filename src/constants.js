@@ -1,6 +1,9 @@
+import isEmail from 'validator/lib/isEmail'
+
 export const DEFAULTS = {
   delay: 0,
   action: '//my.thrivehive.com/webform/directFormHandler',
+  validationOverride: false,
   mappedInputs: []
 }
 
@@ -18,13 +21,23 @@ export const MESSAGES = {
 
 export const INPUT_RULES = {
   email: {
-    type: 'email'
+    type: 'email',
+    test: isEmail,
+    message: 'Please enter a valid email address'
   },
   phone: {
     type: 'tel',
-    pattern: '[\\d\\s\\(\\)\\-\\+]*'
+    pattern: '^[\\d\\s\\(\\)\\-\\+]*$',
+    message: 'Please enter a valid phone number'
   },
   zip: {
-    pattern: '[\\d\\s\\-]*'
+    pattern: '^[\\d\\s\\-]*$',
+    message: 'Please enter a valid postal code'
   }
 }
+
+export const INPUT_TAGS = [
+  'input',
+  'select',
+  'textarea'
+]

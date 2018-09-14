@@ -25,6 +25,14 @@ export const errorMessage = (message) => {
   `
 }
 
+export const warningMessage = (message) => {
+  return html`
+    <div class="th-form-validation message error">
+      ${message}
+    </div>
+  `
+}
+
 export const loading = (message) => {
   return html`
     <div class="th-form-loading">

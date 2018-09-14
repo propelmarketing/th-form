@@ -1,5 +1,6 @@
 import {
-  REQUEST_HEADERS
+  REQUEST_HEADERS,
+  INPUT_RULES
 } from '../constants'
 
 /**
@@ -10,10 +11,10 @@ import {
  * @returns Object
  */
 
-export function getInputRules(name, rules) {
-  const key = Object.keys(rules)
-    .find(rule => name.includes(rule))
-  return rules[key] || {}
+export function getInputRules(name, returnEmpty = false) {
+  const key = Object.keys(INPUT_RULES)
+    .find(rule => name.toLowerCase().includes(rule))
+  return INPUT_RULES[key] || (returnEmpty && {})
 }
 
 /**
@@ -29,6 +30,12 @@ export function htmlToNode(html) {
   return $content.length > 1
     ? $content
     : $content[0]
+}
+
+export function replaceNode($el, html) {
+  const $new_node = htmlToNode(html)
+  $el.parentNode.replaceChild($new_node, $el)
+  return $new_node
 }
 
 /**
@@ -88,4 +95,27 @@ export function ready(delay) {
       window.addEventListener('load', complete, false)
     }
   })
+}
+
+/**
+ * test for html form validation support
+ *
+ * @export
+ * @returns Boolean
+ */
+export function testValidationSupport() {
+  const input = document.createElement('input')
+  return (
+    'validity' in input &&
+    'badInput' in input.validity &&
+    'patternMismatch' in input.validity &&
+    'rangeOverflow' in input.validity &&
+    'rangeUnderflow' in input.validity &&
+    'stepMismatch' in input.validity &&
+    'tooLong' in input.validity &&
+    'tooShort' in input.validity &&
+    'typeMismatch' in input.validity &&
+    'valid' in input.validity &&
+    'valueMissing' in input.validity
+  )
 }

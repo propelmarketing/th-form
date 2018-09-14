@@ -3,7 +3,7 @@ import isEmail from 'validator/lib/isEmail'
 export const DEFAULTS = {
   delay: 0,
   action: '//my.thrivehive.com/webform/directFormHandler',
-  validationOverride: false,
+  customValidation: false,
   mappedInputs: []
 }
 

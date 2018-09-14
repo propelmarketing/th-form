@@ -18,10 +18,11 @@ export function getInputRules(name, returnEmpty = false) {
 }
 
 /**
- * transform a template string into a dom node
+ * transform html into a dom node(s)
  *
  * @param {*} html
  * @export
+ * @returns HTMLElement | NodeList
  */
 export function htmlToNode(html) {
   const $wrap = document.createElement('div')
@@ -32,6 +33,14 @@ export function htmlToNode(html) {
     : $content[0]
 }
 
+/**
+ * replace dom node with new html
+ *
+ * @export
+ * @param {*} $el
+ * @param {*} html
+ * @returns HTMLElement
+ */
 export function replaceNode($el, html) {
   const $new_node = htmlToNode(html)
   $el.parentNode.replaceChild($new_node, $el)

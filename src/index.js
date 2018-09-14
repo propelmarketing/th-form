@@ -43,7 +43,7 @@ import {
 
     setValidationMode() {
       if (!utils.testValidationSupport()) {
-        this.options.validationOverride = true
+        this.options.customValidation = true
       }
     }
 
@@ -55,7 +55,7 @@ import {
         this.resetRequired,
         this.mapInputs,
         this.convertInputs,
-        this.addContainers,
+        this.addMessages,
         this.bindEventListeners,
         this.wrapForm,
         this.unbindInlineEvents,
@@ -109,7 +109,7 @@ import {
 
     setFormAttributes($el) {
       $el.setAttribute('action', this.options.action)
-      const action = this.options.validationOverride
+      const action = this.options.customValidation
         ? 'set'
         : 'remove'
       $el[`${action}Attribute`]('novalidate', true)
@@ -161,7 +161,7 @@ import {
       return $el
     }
 
-    addContainers($el) {
+    addMessages($el) {
       this.$success = utils.htmlToNode(
         templates.successMessage(MESSAGES.success)
       )
@@ -175,15 +175,10 @@ import {
         templates.loading('Loading...')
       )
 
-      this.hideElement(this.$success)
-      this.hideElement(this.$error)
-      this.hideElement(this.$warning)
-      this.hideElement(this.$loading)
-
-      $el.appendChild(this.$success)
-      $el.appendChild(this.$error)
-      $el.appendChild(this.$warning)
-      $el.appendChild(this.$loading)
+      $el.appendChild(...this.hideElement(this.$success))
+      $el.appendChild(...this.hideElement(this.$error))
+      $el.appendChild(...this.hideElement(this.$warning))
+      $el.appendChild(...this.hideElement(this.$loading))
 
       return $el
     }
@@ -238,9 +233,7 @@ import {
     async handleSubmit(e) {
       e.preventDefault()
       this.hideElement(this.$success, this.$error, this.$warning)
-      const passed = this.options.validationOverride
-        ? this.validateAll()
-        : true
+      const passed = this.validateAll()
       if (passed) {
         const data = this.getFormData()
         this.showElement(this.$loading)
@@ -264,35 +257,38 @@ import {
     }
 
     validateAll() {
-      const $inputs = this.$clone.querySelectorAll(INPUT_TAGS.join())
-      let first_error = null
-      const all_passed = [...$inputs].reduce((acc, $input) => {
-        const validity = this.validateEach($input)
-        if (!validity.value && !first_error) {
-          first_error = validity
+      if (this.options.customValidation) {
+        const $inputs = this.$clone.querySelectorAll(INPUT_TAGS.join())
+        let first_error = null
+        const all_passed = [...$inputs].reduce((acc, $input) => {
+          const validity = this.validateEach($input)
+          if (!validity.value && !first_error) {
+            first_error = validity
+          }
+          acc = validity.value
+            ? acc
+            : false
+          return acc
+        }, true)
+        if (!all_passed) {
+          const template = templates.warningMessage(first_error.message)
+          this.$warning = utils.replaceNode(this.$warning, template)
+          this.showElement(this.$warning)
         }
-        acc = validity.value
-          ? acc
-          : false
-        return acc
-      }, true)
-      if (!all_passed) {
-        this.$warning = utils.replaceNode(
-          this.$warning,
-          templates.warningMessage(first_error.message)
-        )
-        this.showElement(this.$warning)
+        return all_passed
+      } else {
+        return true
       }
-      return all_passed
     }
 
     validateEach($input) {
       const { value, required } = $input
       if (required || value) {
+        const name = $input.name.toLowerCase()
         const passed = required && !value
           ? {
             value: false,
-            message: `The ${$input.name.toLowerCase()} field is required.` }
+            message: `The ${name} field is required.` }
           : this.validate($input)
         return passed
       } else {

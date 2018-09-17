@@ -48,6 +48,18 @@ export function replaceNode($el, html) {
 }
 
 /**
+ * append any number of child DOM nodes
+ *
+ * @export
+ * @param {*} $el
+ * @param {*} $children
+ * @returns Array
+ */
+export function appendChild($el, ...$children) {
+  return $children.map($child => $el.appendChild($child))
+}
+
+/**
  * bring xhr to es6
  *
  * @export

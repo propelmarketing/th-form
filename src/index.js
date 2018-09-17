@@ -162,23 +162,43 @@ import {
     }
 
     addMessages($el) {
-      this.$success = utils.htmlToNode(
-        templates.successMessage(MESSAGES.success)
-      )
-      this.$error = utils.htmlToNode(
-        templates.errorMessage(MESSAGES.error)
-      )
-      this.$warning = utils.htmlToNode(
-        templates.errorMessage(MESSAGES.error)
-      )
-      this.$loading = utils.htmlToNode(
-        templates.loading('Loading...')
-      )
+      const messages = {
+        $success: utils.htmlToNode(
+          templates.successMessage(MESSAGES.success)
+        ),
+        $error: utils.htmlToNode(
+          templates.errorMessage(MESSAGES.error)
+        ),
+        $warning: utils.htmlToNode(
+          templates.errorMessage(MESSAGES.error)
+        ),
+        $loading: utils.htmlToNode(
+          templates.loading(MESSAGES.loading)
+        )
+      }
+      Object.assign(this, messages)
+      // Object.keys(messages).map(key => {
+      //   $el.appendChild(...this.hideElement(messages[key]))
+      // })
+      utils.appendChild($el, ...this.hideElement(...Object.values(messages)))
+      // utils.appendChild($el, ...this.hideElement())
+      // this.$success = utils.htmlToNode(
+      //   templates.successMessage(MESSAGES.success)
+      // )
+      // this.$error = utils.htmlToNode(
+      //   templates.errorMessage(MESSAGES.error)
+      // )
+      // this.$warning = utils.htmlToNode(
+      //   templates.errorMessage(MESSAGES.error)
+      // )
+      // this.$loading = utils.htmlToNode(
+      //   templates.loading('Loading...')
+      // )
 
-      $el.appendChild(...this.hideElement(this.$success))
-      $el.appendChild(...this.hideElement(this.$error))
-      $el.appendChild(...this.hideElement(this.$warning))
-      $el.appendChild(...this.hideElement(this.$loading))
+      // $el.appendChild(...this.hideElement(this.$success))
+      // $el.appendChild(...this.hideElement(this.$error))
+      // $el.appendChild(...this.hideElement(this.$warning))
+      // $el.appendChild(...this.hideElement(this.$loading))
 
       return $el
     }
@@ -237,6 +257,7 @@ import {
       if (passed) {
         const data = this.getFormData()
         this.showElement(this.$loading)
+        await utils.sleep(2000)
         utils.request(this.options.action, 'POST', data)
           .then((e) => {
             this.handleSuccess(e)

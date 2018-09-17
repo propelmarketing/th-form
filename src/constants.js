@@ -13,6 +13,7 @@ export const REQUEST_HEADERS = [
 ]
 
 export const MESSAGES = {
+  loading: 'Loading...',
   success: 'Thanks! Your message has been received!',
   error: 'Oops! There was a problem submitting your message',
   catracker: 'Unable to track form, missing catracker.js. ' +

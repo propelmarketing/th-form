@@ -1,5 +1,9 @@
 $color-status-success: #32bb95;
 $color-status-error: #e4154e;
+$color-loader-background: rgba(0,0,0, 0.75);
+$color-loader-foreground: white;
+
+$loader-size: 40px;
 
 @mixin messageBox($base-color) {
   color: darken($base-color, 0.6);
@@ -12,6 +16,7 @@ $color-status-error: #e4154e;
     &.message {
       display: inline-block;
       padding: 6px 8px;
+      margin: 10px 0;
       border-radius: 3px;
   
       &.success {
@@ -20,6 +25,111 @@ $color-status-error: #e4154e;
       &.error {
         @include messageBox($color-status-error);
       }
+    }
+  }
+  .th-form-loading {
+    margin: 10px 0;
+    width: $loader-size;
+    height: $loader-size;
+    position: relative;
+    background: $color-loader-background;
+    box-sizing: border-box;
+    border-radius: 4px;
+    
+    .th-circle {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      &:before {
+        content: '';
+        display: block;
+        margin: 5px auto 0;
+        width: 7%;
+        height: 14%;
+        background-color: $color-loader-foreground;
+        border-radius: 50%;
+        animation: th-circleFadeDelay 1.2s infinite ease-in-out both;
+      }
+    }
+
+    .th-circle2 {
+      transform: rotate(30deg);
+    }
+    .th-circle3 {
+      transform: rotate(60deg);
+    }
+    .th-circle4 {
+      transform: rotate(90deg);
+    }
+    .th-circle5 {
+      transform: rotate(120deg);
+    }
+    .th-circle6 {
+      transform: rotate(150deg);
+    }
+    .th-circle7 {
+      transform: rotate(180deg);
+    }
+    .th-circle8 {
+      transform: rotate(210deg);
+    }
+    .th-circle9 {
+      transform: rotate(240deg);
+    }
+    .th-circle10 {
+      transform: rotate(270deg);
+    }
+    .th-circle11 {
+      transform: rotate(300deg); 
+    }
+    .th-circle12 {
+      transform: rotate(330deg); 
+    }
+    .th-circle2:before {
+      animation-delay: -1.1s; 
+    }
+    .th-circle3:before {
+      animation-delay: -1s; 
+    }
+    .th-circle4:before {
+      animation-delay: -0.9s; 
+    }
+    .th-circle5:before {
+      animation-delay: -0.8s; 
+    }
+    .th-circle6:before {
+      animation-delay: -0.7s; 
+    }
+    .th-circle7:before {
+      animation-delay: -0.6s; 
+    }
+    .th-circle8:before {
+      animation-delay: -0.5s; 
+    }
+    .th-circle9:before {
+      animation-delay: -0.4s;
+    }
+    .th-circle10:before {
+      animation-delay: -0.3s;
+    }
+    .th-circle11:before {
+      animation-delay: -0.2s;
+    }
+    .th-circle12:before {
+      animation-delay: -0.1s;
+    }
+    
+    @-webkit-keyframes th-circleFadeDelay {
+      0%, 39%, 100% { opacity: 0; }
+      40% { opacity: 1; }
+    }
+    
+    @keyframes th-circleFadeDelay {
+      0%, 39%, 100% { opacity: 0; }
+      40% { opacity: 1; } 
     }
   }
   .hidden {

@@ -33,21 +33,12 @@ export const warningMessage = (message) => {
   `
 }
 
+const circles = new Array(12).fill(null)
+
 export const loading = () => {
   return html`
     <div class="th-form-loading">
-      <div class="th-circle1 th-circle"></div>
-      <div class="th-circle2 th-circle"></div>
-      <div class="th-circle3 th-circle"></div>
-      <div class="th-circle4 th-circle"></div>
-      <div class="th-circle5 th-circle"></div>
-      <div class="th-circle6 th-circle"></div>
-      <div class="th-circle7 th-circle"></div>
-      <div class="th-circle8 th-circle"></div>
-      <div class="th-circle9 th-circle"></div>
-      <div class="th-circle10 th-circle"></div>
-      <div class="th-circle11 th-circle"></div>
-      <div class="th-circle12 th-circle"></div>
+      ${circles.map((i, n) => `<div class="th-circle th-circle-${n + 1}"></div>`)}
     </div>
   `
 }

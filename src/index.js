@@ -6,7 +6,6 @@ import {
   MESSAGES
 } from './constants'
 
-console.log(utils);
 ((context) => {
   /**
    * Instrument customer lead forms in-place

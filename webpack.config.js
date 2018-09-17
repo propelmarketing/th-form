@@ -44,7 +44,6 @@ const options = {
         test: /\.scss$/,
         use: [
           'css-loader',
-          'sass-loader',
           {
             loader: 'postcss-loader',
             options: {
@@ -56,7 +55,8 @@ const options = {
                 })
               ]
             }
-          }
+          },
+          'sass-loader'
         ]
       },
       {

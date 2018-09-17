@@ -1,7 +1,19 @@
+import serialize from 'form-serialize'
 import {
   REQUEST_HEADERS,
   INPUT_RULES
 } from '../constants'
+
+/**
+ * get urlencoded form data from DOM node
+ *
+ * @export
+ * @param {*} $form
+ * @returns String
+ */
+export function getFormData($form) {
+  return serialize($form)
+}
 
 /**
  * get rules that match input name
@@ -57,6 +69,34 @@ export function replaceNode($el, html) {
  */
 export function appendChild($el, ...$children) {
   return $children.map($child => $el.appendChild($child))
+}
+
+/**
+ * show DOM node
+ *
+ * @export
+ * @param {*} $els
+ * @returns Array
+ */
+export function showElement(...$els) {
+  return $els.map($el => {
+    $el.classList.remove('hidden')
+    return $el
+  })
+}
+
+/**
+ * hide DOM node
+ *
+ * @export
+ * @param {*} $els
+ * @returns Array
+ */
+export function hideElement(...$els) {
+  return $els.map($el => {
+    $el.classList.add('hidden')
+    return $el
+  })
 }
 
 /**

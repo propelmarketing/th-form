@@ -7,6 +7,7 @@ $loader-size: 40px;
 
 @mixin messageBox($base-color) {
   color: darken($base-color, 0.6);
+
   background-color: transparentize($base-color, 0.9);
   border: 1px solid $base-color;
 }
@@ -21,12 +22,15 @@ $loader-size: 40px;
   
       &.success {
         @include messageBox($color-status-success);
+        background-color: rgba(115, 239, 207, 0.34);
       }
       &.error {
         @include messageBox($color-status-error);
+        background-color: rgba(255, 136, 169, 0.53);
       }
     }
   }
+
   .th-form-loading {
     margin: 10px 0;
     width: $loader-size;

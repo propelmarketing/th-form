@@ -1,4 +1,3 @@
-import serialize from 'form-serialize'
 import * as templates from './templates'
 import * as utils from './utils'
 import {
@@ -7,6 +6,7 @@ import {
   MESSAGES
 } from './constants'
 
+console.log(utils);
 ((context) => {
   /**
    * Instrument customer lead forms in-place
@@ -29,10 +29,15 @@ import {
     }
 
     async init() {
-      await utils.ready(this.options.delay)
-      this.checkForTrackingScript()
-      this.setValidationMode()
-      this.takeControlOfForm()
+      try {
+        await utils.ready(this.options.delay)
+        this.checkForTrackingScript()
+        await this.bindForm()
+        this.setValidationMode()
+        this.takeControlOfForm()
+      } catch (error) {
+        console.warn(error)
+      }
     }
 
     checkForTrackingScript() {
@@ -49,7 +54,6 @@ import {
 
     takeControlOfForm() {
       return this.compose(
-        this.bindForm,
         this.cloneForm,
         this.setFormAttributes,
         this.resetRequired,
@@ -63,7 +67,7 @@ import {
         this.removeOriginalForm,
         this.addHiddenInputs,
         this.injectStylesheet
-      )()
+      )(this.$form)
     }
 
     compose(...fns) {
@@ -71,12 +75,18 @@ import {
     }
 
     bindForm() {
-      this.$form = document.querySelector(this.selector)
-      return this.$form
+      return new Promise((resolve, reject) => {
+        this.$form = document.querySelector(this.selector)
+        if (!this.$form) {
+          reject(new Error(`No form found with selector "${this.selector}"`))
+        } else {
+          resolve(this.$form)
+        }
+      })
     }
 
     bindEventListeners($el) {
-      $el.addEventListener('submit', this.handleSubmit.bind(this))
+      $el.addEventListener('submit', this.onSubmit.bind(this))
       return $el
     }
 
@@ -177,44 +187,8 @@ import {
         )
       }
       Object.assign(this, messages)
-      // Object.keys(messages).map(key => {
-      //   $el.appendChild(...this.hideElement(messages[key]))
-      // })
-      utils.appendChild($el, ...this.hideElement(...Object.values(messages)))
-      // utils.appendChild($el, ...this.hideElement())
-      // this.$success = utils.htmlToNode(
-      //   templates.successMessage(MESSAGES.success)
-      // )
-      // this.$error = utils.htmlToNode(
-      //   templates.errorMessage(MESSAGES.error)
-      // )
-      // this.$warning = utils.htmlToNode(
-      //   templates.errorMessage(MESSAGES.error)
-      // )
-      // this.$loading = utils.htmlToNode(
-      //   templates.loading('Loading...')
-      // )
-
-      // $el.appendChild(...this.hideElement(this.$success))
-      // $el.appendChild(...this.hideElement(this.$error))
-      // $el.appendChild(...this.hideElement(this.$warning))
-      // $el.appendChild(...this.hideElement(this.$loading))
-
+      utils.appendChild($el, ...utils.hideElement(...Object.values(messages)))
       return $el
-    }
-
-    showElement(...$els) {
-      $els.map($el => {
-        $el.classList.remove('hidden')
-      })
-      return $els
-    }
-
-    hideElement(...$els) {
-      $els.map($el => {
-        $el.classList.add('hidden')
-      })
-      return $els
     }
 
     addHiddenInputs() {
@@ -246,35 +220,31 @@ import {
       return this
     }
 
-    getFormData() {
-      return serialize(this.$clone)
-    }
-
-    async handleSubmit(e) {
+    async onSubmit(e) {
       e.preventDefault()
-      this.hideElement(this.$success, this.$error, this.$warning)
+      utils.hideElement(this.$success, this.$error, this.$warning)
       const passed = this.validateAll()
       if (passed) {
-        const data = this.getFormData()
-        this.showElement(this.$loading)
-        await utils.sleep(2000)
+        const data = utils.getFormData(this.$clone)
+        utils.showElement(this.$loading)
         utils.request(this.options.action, 'POST', data)
           .then((e) => {
-            this.handleSuccess(e)
+            this.onSuccess(e)
           })
           .catch((e) => {
-            this.handleError(e)
+            this.onError(e)
           })
-          .then(this.hideElement(this.$loading))
       }
     }
 
-    handleSuccess(e) {
-      this.showElement(this.$success)
+    onSuccess(e) {
+      utils.hideElement(this.$loading)
+      utils.showElement(this.$success)
     }
 
-    handleError(e) {
-      this.showElement(this.$error)
+    onError(e) {
+      utils.hideElement(this.$loading)
+      utils.showElement(this.$error)
     }
 
     validateAll() {
@@ -294,7 +264,7 @@ import {
         if (!all_passed) {
           const template = templates.warningMessage(first_error.message)
           this.$warning = utils.replaceNode(this.$warning, template)
-          this.showElement(this.$warning)
+          utils.showElement(this.$warning)
         }
         return all_passed
       } else {

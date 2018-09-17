@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const env = require('./utils/env')
+const postcssPresetEnv = require('postcss-preset-env')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WriteFilePlugin = require('write-file-webpack-plugin')
@@ -43,7 +44,19 @@ const options = {
         test: /\.scss$/,
         use: [
           'css-loader',
-          'sass-loader'
+          'sass-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: () => [
+                postcssPresetEnv({
+                  stage: 3,
+                  browsers: ['cover 99.5%', '> 5%']
+                })
+              ]
+            }
+          }
         ]
       },
       {

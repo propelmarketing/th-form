@@ -276,11 +276,16 @@ import {
     validateEach($input) {
       const { value, required } = $input
       if (required || value) {
-        const name = $input.name.toLowerCase()
+        const name = $input.name && $input.name
+          .toLowerCase()
+          .replace('_', ' ')
+        const message = name
+          ? MESSAGES.requiredNamed(name)
+          : MESSAGES.required
         const passed = required && !value
           ? {
             value: false,
-            message: `The ${name} field is required.` }
+            message }
           : this.validate($input)
         return passed
       } else {
@@ -305,7 +310,7 @@ import {
         if (test) {
           passed.value = test(value)
         }
-        passed.message = rules.message
+        passed.message = rules.title
       }
       return passed
     }

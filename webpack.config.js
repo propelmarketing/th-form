@@ -51,7 +51,10 @@ const options = {
               plugins: () => [
                 postcssPresetEnv({
                   stage: 3,
-                  browsers: ['cover 99.5%', '> 5%']
+                  browsers: [
+                    'cover 99.5%',
+                    '> 5%'
+                  ]
                 })
               ]
             }
@@ -93,6 +96,17 @@ const options = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'examples', 'wix.ejs'),
       filename: 'wix.html',
+      chunks: ['THForm'],
+      inject: false,
+      templateParameters(compilation, assets, _options) {
+        return {
+          scriptSrc: `./${OUTPUT_FILENAME}${BUNDLE_SUFFIX}`
+        }
+      }
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'examples', 'wix2.ejs'),
+      filename: 'wix2.html',
       chunks: ['THForm'],
       inject: false,
       templateParameters(compilation, assets, _options) {

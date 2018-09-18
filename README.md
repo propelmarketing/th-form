@@ -32,6 +32,21 @@ new THForm(
 
 In order to properly track forms, THForm currently depends on `catracker.js` being initialized beforehand. THForm has no other dependencies.
 
+# Browser Support
+
+The project is transpiled to es5 by `webpack` / `babel`, with `@babel/polyfill` and `@babel/env` set to target the following browsers:
+
+- Chrome >= 52
+- FireFox >= 44
+- Safari >= 7
+- Internet Explorer 11
+- last 4 Edge versions
+
+SCSS is transpiled to CSS via `node-sass` and autoprefixed by `postcss` and `autoprefixer` per the following settings:
+
+- stage: 3
+- browsers: ['cover 99.5%', '> 5%']
+
 # Params
 
 The constructor accepts the following 3 parameters:

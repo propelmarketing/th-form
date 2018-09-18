@@ -17,6 +17,7 @@ $loader-size: 40px;
       padding: 6px 8px;
       margin: 10px 0;
       border-radius: 3px;
+      font-size: 1.2em;
   
       &.success {
         @include messageBox($color-status-success);
@@ -24,7 +25,7 @@ $loader-size: 40px;
       }
       &.error {
         @include messageBox($color-status-error);
-        background-color: rgba(255, 136, 169, 0.53);
+        background-color: rgba(212, 104, 134, 0.54);
       }
     }
   }

@@ -14,6 +14,8 @@ export const REQUEST_HEADERS = [
 ]
 
 export const MESSAGES = {
+  required: 'This field is required',
+  requiredNamed: name => `The ${name} field is required.`,
   success: 'Thanks! Your message has been received!',
   error: 'Oops! There was a problem submitting your message',
   catracker: 'Unable to track form, missing catracker.js. ' +

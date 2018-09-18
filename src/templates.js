@@ -1,5 +1,15 @@
 import { html } from 'common-tags'
 import styles from './css/styles.scss'
+import * as utils from '@/utils'
+const template = html`
+<div class="test1">
+  Hello World
+</div>
+<div class="test2">
+  Hello World
+</div>
+`
+console.log(utils.htmlToNode(template))
 
 export const stylesheet = () => {
   return html`

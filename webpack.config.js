@@ -32,6 +32,11 @@ const options = {
     path: path.join(__dirname, OUTPUT_PATH),
     filename: `[name]${BUNDLE_SUFFIX}`
   },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  },
   module: {
     rules: [
       {

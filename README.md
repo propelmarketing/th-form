@@ -61,6 +61,8 @@ The corresponding ThriveHive form ID.
 
 ### Options \<object>
 
+- **customValidation** \<boolean>
+  - Default is `false`. The form will be validated via the built-in browser    `ValidityState` API by default, but will use a fallback validation system if `ValidityState` is not supported by the browser, or if the `customValidation` parameter is set to `true`. This option should be used if the customer wants to control the style of the validation messages.
 - **delay** \<number>
   - Number of milliseconds to delay initialization. This was added to solve a problem created by Wix replacing the DOM when the page loads, which can be worked around by added a 1000ms delay.
 - **mappedInputs** \<array>

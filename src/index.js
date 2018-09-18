@@ -1,5 +1,5 @@
 import * as templates from './templates'
-import * as utils from './utils'
+import * as utils from '@/utils'
 import {
   DEFAULTS,
   INPUT_TAGS,

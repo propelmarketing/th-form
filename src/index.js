@@ -1,3 +1,4 @@
+import './polyfills'
 import * as templates from './templates'
 import * as utils from './utils'
 import {

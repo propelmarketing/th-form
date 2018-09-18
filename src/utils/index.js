@@ -120,7 +120,11 @@ export function request(url, method = 'GET', data) {
       }
     }
     xhr.open(method, url)
-    xhr.setRequestHeader(...REQUEST_HEADERS)
+    REQUEST_HEADERS.map(obj => {
+      for (let key in obj) {
+        xhr.setRequestHeader(key, obj[key])
+      }
+    })
     xhr.send(data)
     return xhr
   })
@@ -153,7 +157,7 @@ export function ready(delay) {
     if (/comp|inter|loaded/.test(document.readyState)) {
       complete()
     } else {
-      window.addEventListener('load', complete, false)
+      document.addEventListener('DOMContentLoaded', complete, false)
     }
   })
 }

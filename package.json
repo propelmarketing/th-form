@@ -48,7 +48,6 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "classlist.js": "^1.1.20150312",
     "common-tags": "^1.8.0",
     "form-serialize": "^0.7.2",
     "validator": "^10.7.1"

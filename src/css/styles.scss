@@ -7,7 +7,6 @@ $loader-size: 40px;
 
 @mixin messageBox($base-color) {
   color: darken($base-color, 0.8);
-  // background-color: transparentize($base-color, 0.9);
   border: 1px solid $base-color;
 }
 

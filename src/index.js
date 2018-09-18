@@ -1,9 +1,9 @@
-import './polyfills'
 import * as templates from './templates'
 import * as utils from './utils'
 import {
   DEFAULTS,
   INPUT_TAGS,
+  EXCLUDED_ATTRIBUTES,
   MESSAGES
 } from './constants'
 
@@ -107,6 +107,7 @@ import {
 
     cloneForm($el) {
       this.$clone = $el.cloneNode(true)
+      this.$inputs = this.$clone.querySelectorAll(INPUT_TAGS.join())
       return this.$clone
     }
 
@@ -161,11 +162,12 @@ import {
     }
 
     convertInputs($el) {
-      const $inputs = $el.querySelectorAll('input')
-      $inputs.forEach($input => {
+      this.$inputs.forEach($input => {
         const rules = utils.getInputRules($input.name, true)
         for (let key in rules) {
-          $input.setAttribute(key, rules[key])
+          if (!EXCLUDED_ATTRIBUTES.includes(key)) {
+            $input.setAttribute(key, rules[key])
+          }
         }
       })
       return $el
@@ -249,9 +251,8 @@ import {
 
     validateAll() {
       if (this.options.customValidation) {
-        const $inputs = this.$clone.querySelectorAll(INPUT_TAGS.join())
         let first_error = null
-        const all_passed = [...$inputs].reduce((acc, $input) => {
+        const all_passed = [...this.$inputs].reduce((acc, $input) => {
           const validity = this.validateEach($input)
           if (!validity.value && !first_error) {
             first_error = validity

@@ -8,12 +8,12 @@ export const DEFAULTS = {
 }
 
 export const REQUEST_HEADERS = [
-  'Content-Type',
-  'application/x-www-form-urlencoded'
+  {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
 ]
 
 export const MESSAGES = {
-  loading: 'Loading...',
   success: 'Thanks! Your message has been received!',
   error: 'Oops! There was a problem submitting your message',
   catracker: 'Unable to track form, missing catracker.js. ' +
@@ -24,16 +24,16 @@ export const INPUT_RULES = {
   email: {
     type: 'email',
     test: isEmail,
-    message: 'Please enter a valid email address'
+    title: 'Please enter a valid email address'
   },
   phone: {
     type: 'tel',
     pattern: '^[\\d\\s\\(\\)\\-\\+]*$',
-    message: 'Please enter a valid phone number'
+    title: 'Please enter a valid phone number'
   },
   zip: {
     pattern: '^[\\d\\s\\-]*$',
-    message: 'Please enter a valid postal code'
+    title: 'Please enter a valid postal code'
   }
 }
 
@@ -41,4 +41,8 @@ export const INPUT_TAGS = [
   'input',
   'select',
   'textarea'
+]
+
+export const EXCLUDED_ATTRIBUTES = [
+  'test'
 ]

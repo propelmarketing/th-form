@@ -1,23 +1,20 @@
 import { html } from 'common-tags'
 import * as utils from '@/utils'
 
-let open, send
-const setRequestHeader = jest.fn()
-
 function createXHRmock(status) {
-  open = jest.fn()
-  send = jest.fn().mockImplementation(function() {
+  const setRequestHeader = jest.fn()
+  const open = jest.fn()
+  const send = jest.fn().mockImplementation(function() {
     this.status = status
-    this.onreadystatechange()
+    this.onreadystatechange && this.onreadystatechange()
   })
-  const xhrMock = function() {
+  const xhrMock = () => {
     return {
       open,
       send,
       setRequestHeader
     }
   }
-
   window.XMLHttpRequest = jest.fn().mockImplementation(xhrMock)
 }
 
@@ -179,10 +176,4 @@ describe('request', async () => {
     const response = await utils.request('/', 'POST', { test: true })
     expect(response.status).toBe(200)
   })
-  // test('failure', async () => {
-  //   createXHRmock(400)
-  //   const response = await utils.request('/', 'POST', { test: true })
-  //   console.log(response.status)
-  //   expect(response.status).toBe(500)
-  // })
 })

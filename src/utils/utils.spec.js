@@ -1,6 +1,26 @@
 import { html } from 'common-tags'
 import * as utils from '@/utils'
 
+let open, send
+const setRequestHeader = jest.fn()
+
+function createXHRmock(status) {
+  open = jest.fn()
+  send = jest.fn().mockImplementation(function() {
+    this.status = status
+    this.onreadystatechange()
+  })
+  const xhrMock = function() {
+    return {
+      open,
+      send,
+      setRequestHeader
+    }
+  }
+
+  window.XMLHttpRequest = jest.fn().mockImplementation(xhrMock)
+}
+
 describe('getInputRules', () => {
   test('exact match', () => {
     const rules = utils.getInputRules('email')
@@ -144,11 +164,25 @@ describe('ready', () => {
   test('delay', () => {
     expect.assertions(1)
     const t1 = performance.now()
-    return utils.ready(100)
+    return utils.ready(120)
       .then(() => {
         const t2 = performance.now()
         const diff = (t2 - t1)
         expect(diff).toBeGreaterThan(100)
       })
   })
+})
+
+describe('request', async () => {
+  test('success', async () => {
+    createXHRmock(200)
+    const response = await utils.request('/', 'POST', { test: true })
+    expect(response.status).toBe(200)
+  })
+  // test('failure', async () => {
+  //   createXHRmock(400)
+  //   const response = await utils.request('/', 'POST', { test: true })
+  //   console.log(response.status)
+  //   expect(response.status).toBe(500)
+  // })
 })

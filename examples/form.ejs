@@ -400,6 +400,12 @@
   <script>
   new THForm('#thrivehive-form18892', '1fda2ea7-a281-4938-8429-83ec3591f85a', {
     action: '//krool.thrivehive.com/webform/directFormHandler',
+    onSuccess() {
+      alert('Thanks! Your message has been received!')
+    },
+    onError() {
+      alert('Oops! There was a problem submitting your message.')
+    },
     mappedInputs: [
       {
         name: 'list.email',

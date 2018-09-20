@@ -67,6 +67,10 @@ The corresponding ThriveHive form ID.
   - Number of milliseconds to delay initialization. This was added to solve a problem created by Wix replacing the DOM when the page loads, which can be worked around by added a 1000ms delay.
 - **mappedInputs** \<array>
   - An array containing any changes to the form inputs
+- **onSuccess** \<function>
+  - Callback for successful form submission
+- **onError** \<function>
+  - Callback for failed form submission
 
 # Development
 

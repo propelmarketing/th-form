@@ -36,3 +36,5 @@ const server = new WebpackDevServer(compiler, {
 })
 
 server.listen(env.PORT)
+
+module.exports = server

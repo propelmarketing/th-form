@@ -14,6 +14,7 @@ const BUNDLE_SUFFIX = '.bundle.js'
 
 const ENV = env.NODE_ENV
 
+const PUBLIC_PATH = 'examples'
 const OUTPUT_PATH = ENV === 'development'
   ? 'build'
   : 'dist'
@@ -30,6 +31,7 @@ const options = {
   },
   output: {
     path: path.join(__dirname, OUTPUT_PATH),
+    publicPath: path.join(__dirname, PUBLIC_PATH),
     filename: `[name]${BUNDLE_SUFFIX}`
   },
   resolve: {
@@ -42,6 +44,7 @@ const options = {
       {
         test: /\.css$/,
         use: [
+          // 'style-loader',
           'css-loader'
         ]
       },
@@ -112,6 +115,17 @@ const options = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'examples', 'wix2.ejs'),
       filename: 'wix2.html',
+      chunks: ['THForm'],
+      inject: false,
+      templateParameters(compilation, assets, _options) {
+        return {
+          scriptSrc: `./${OUTPUT_FILENAME}${BUNDLE_SUFFIX}`
+        }
+      }
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'examples', 'unnamed_inputs.ejs'),
+      filename: 'unnamed.html',
       chunks: ['THForm'],
       inject: false,
       templateParameters(compilation, assets, _options) {

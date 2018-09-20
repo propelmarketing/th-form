@@ -147,7 +147,10 @@ import {
       const mappedInputs = this.options.mappedInputs
       if (mappedInputs.length) {
         mappedInputs.map(input => {
-          const $input = $el.querySelector(`[name="${input.name}"]`)
+          const selector = input.name
+            ? `[name="${input.name}"]`
+            : input.selector
+          const $input = $el.querySelector(selector)
           if ($input) {
             if ('newName' in input) {
               $input.name = input.newName

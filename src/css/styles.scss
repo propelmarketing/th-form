@@ -61,7 +61,7 @@ $loader-size: 40px;
     $angle: 30;
     $time: -1.1;
     @for $i from 2 through 12 {
-      .th-circle-#{$i} {
+      .thc-#{$i} {
         transform: rotate(#{$angle}deg);
 
         &:before {

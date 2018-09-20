@@ -22,6 +22,12 @@
   <script src="<%= scriptSrc %>"></script>
   <script>
   new THForm('form', '123', {
+    onSuccess() {
+      alert('Thanks! Your message has been received!')
+    },
+    onError() {
+      alert('Oops! There was a problem submitting your message.')
+    },
     mappedInputs: [
       {
         name: 'fname',

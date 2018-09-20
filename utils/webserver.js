@@ -35,7 +35,7 @@ function server(port) {
       headers: {
         'Access-Control-Allow-Origin': '*'
       }
-    }).listen(port || env.PORT, '0.0.0.0', () => {
+    }, () => resolve()).listen(port || env.PORT, '0.0.0.0', () => {
       resolve(server)
     }).on('error', (err) => {
       reject(err)

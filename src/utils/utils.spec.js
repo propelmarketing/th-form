@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { html } from 'common-tags'
 import * as utils from '@/utils'
 

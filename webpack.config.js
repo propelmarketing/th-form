@@ -23,8 +23,12 @@ const DEVTOOL = ENV === 'development'
   ? 'cheap-module-eval-source-map'
   : false
 
+const mode = env.NODE_ENV === 'test'
+  ? 'development'
+  : env.NODE_ENV
+
 const options = {
-  mode: env.NODE_ENV,
+  mode,
   devtool: DEVTOOL,
   entry: {
     THForm: ENTRY_PATH

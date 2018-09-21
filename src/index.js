@@ -65,6 +65,7 @@ import {
         this.unbindInlineEvents,
         this.appendToParent,
         this.removeOriginalForm,
+        this.removeNamingConflicts,
         this.addHiddenInputs,
         this.injectStylesheet
       )(this.$form)
@@ -205,6 +206,22 @@ import {
       $util.AddHiddenFieldInForm('meta.form-id', $form.id, this.form_id)
       $util.AddHiddenFieldInForm('meta.trackerid', $form.id, tracker_id)
       return this
+    }
+
+    removeNamingConflicts() {
+      const $form = this.$clone
+      const hidden_inputs = [
+        'meta.form-id',
+        'meta.trackerid',
+        'CA-uid',
+        'CA-sess'
+      ]
+      hidden_inputs.map(name => {
+        const $input = $form.querySelector(`input[name="${name}"]`)
+        if ($input) {
+          utils.removeNode($input)
+        }
+      })
     }
 
     injectStylesheet() {

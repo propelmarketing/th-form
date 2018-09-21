@@ -8,6 +8,8 @@ module.exports = {
   },
   launch: {
     headless: false,
-    devtools: true
+    devtools: true,
+    // slowMo: 10,
+    args: [ '--disable-web-security' ]
   }
 }

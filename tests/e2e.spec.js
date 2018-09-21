@@ -1,9 +1,11 @@
 const { TESTING_PORT } = require('../utils/env')
-// const utils = require('../src/utils')
+const utils = require('../src/utils')
 
 const base_url = `http://localhost:${TESTING_PORT}`
 
 jest.setTimeout(40000)
+
+page.on('console', msg => console.log('PAGE LOG:', msg.text()))
 
 describe('e2e tests', async () => {
 
@@ -15,7 +17,7 @@ describe('e2e tests', async () => {
 
     test('form rendered', async () => {
       await page.goto(`${base_url}/unnamed_inputs.html`)
-      await expect(page).toMatch('Last Name')
+      await expect(page).toMatch('Test unnamed inputs')
     })
 
     test('unnamed inputs have a name', async () => {
@@ -47,6 +49,30 @@ describe('e2e tests', async () => {
         return divs.length
       })
       expect(inputs).toBe(hidden_inputs.length)
+    })
+  })
+
+  const user = {
+    first_name: 'Abe',
+    last_name: 'Lincoln',
+    phone1: 617,
+    phone2: 999,
+    phone3: 9999
+  }
+
+  describe('hooks', () => {
+    test('form rendered', async () => {
+      await page.goto(`${base_url}/hooks.html`)
+      await expect(page).toMatch('Test hooks')
+    })
+    test('onError hook', async () => {
+      for (let key in user) {
+        await page.focus(`[name="${key}"]`)
+        await page.keyboard.type(`${user[key]}`)
+      }
+      await expect(page).toDisplayDialog(async () => {
+        await expect(page).toClick('input[type="submit"]')
+      })
     })
   })
 })

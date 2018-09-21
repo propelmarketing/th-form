@@ -15,13 +15,13 @@ const BUNDLE_SUFFIX = '.bundle.js'
 const ENV = env.NODE_ENV
 
 const PUBLIC_PATH = 'examples'
-const OUTPUT_PATH = ENV === 'development'
-  ? 'build'
-  : 'dist'
+const OUTPUT_PATH = ENV === 'production'
+  ? 'dist'
+  : 'build'
 
-const DEVTOOL = ENV === 'development'
-  ? 'cheap-module-eval-source-map'
-  : false
+const DEVTOOL = ENV === 'production'
+  ? false
+  : 'cheap-module-eval-source-map'
 
 const mode = env.NODE_ENV === 'test'
   ? 'development'
@@ -48,7 +48,7 @@ const options = {
       {
         test: /\.css$/,
         use: [
-          // 'style-loader',
+          'style-loader',
           'css-loader'
         ]
       },

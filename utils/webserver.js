@@ -24,7 +24,9 @@ function server(port) {
   const compiler = webpack(config)
 
   compiler.hooks.done.tap('done_message', () => {
-    console.log(chalk.blueBright(`Webpack dev server listening on port ${env.PORT}`))
+    console.log(
+      chalk.blueBright(`Webpack dev server listening on port ${env.PORT}`)
+    )
   })
 
   return new Promise((resolve, reject) => {
@@ -35,7 +37,7 @@ function server(port) {
       headers: {
         'Access-Control-Allow-Origin': '*'
       }
-    }, () => resolve()).listen(port || env.PORT, '0.0.0.0', () => {
+    }).listen(port || env.PORT, '0.0.0.0', () => {
       resolve(server)
     }).on('error', (err) => {
       reject(err)

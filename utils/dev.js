@@ -1,2 +1,3 @@
 const server = require('./webserver')
-server()
+
+server(process.env.PORT)

@@ -7,6 +7,7 @@
     "build": "NODE_ENV=production node utils/build.js",
     "start": "node utils/dev.js",
     "test": "jest",
+    "e2e": "jest tests/e2e.spec.js",
     "testdebug": "node --inspect-brk node_modules/.bin/jest --runInBand"
   },
   "repository": {
@@ -60,6 +61,7 @@
     "validator": "^10.7.1"
   },
   "jest": {
+    "verbose": true,
     "preset": "jest-puppeteer",
     "collectCoverage": true,
     "moduleNameMapper": {

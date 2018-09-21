@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Form test</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Form test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
   <style>
@@ -49,12 +49,6 @@
      foundation grid for the start of medium screen size, so the condition here is set to match it exactly. */
   
     @media only screen and (min-width: 40.063em) {
-      /* Float the submit button on the right, but not on small screen sizes, where it looks more natural on the left */
-      /* form input.hivesubmit {
-        float: right;
-      } */
-      /* Override the line items' left margin, which looks bad for checkboxes and radio options when to the right of the label
-          On small screens their are below the label, in which case it actually looks good with the margin. */
       form ul li.hiveform-responsive-option {
         margin-left: 0px;
       }
@@ -157,7 +151,7 @@
       var script = document.createElement('script');
       script.type = "text/javascript";
       script.src = "https://code.jquery.com/jquery-2.2.4.min.js"
-      document.head.appendChild(script);
+      document.write(script.outerHTML);
     }
   </script>
 
@@ -361,12 +355,12 @@
     
     DomReady.ready(function () {
       // Avoid throwing an exception in the form preview pop-up due to $util not being available
-      // if (window.$util) {
-        // $util.SetFormHiddenID("CA-uid", "thrivehive-form18892");
-        // $util.SetFormSessionID("CA-sess", "thrivehive-form18892");
-        // $util.AddHiddenFieldInForm("meta.form-id", "thrivehive-form18892", "9db70b06-8831-4a20-9d7b-1119abcd84be");
-        // $util.AddHiddenFieldInForm("meta.trackerid", "thrivehive-form18892", "2269382c838342eab6fc8573fc9f1cea");
-      // }
+      if (window.$util) {
+        $util.SetFormHiddenID("CA-uid", "thrivehive-form18892");
+        $util.SetFormSessionID("CA-sess", "thrivehive-form18892");
+        $util.AddHiddenFieldInForm("meta.form-id", "thrivehive-form18892", "9db70b06-8831-4a20-9d7b-1119abcd84be");
+        $util.AddHiddenFieldInForm("meta.trackerid", "thrivehive-form18892", "2269382c838342eab6fc8573fc9f1cea");
+      }
       window.thValidate["thrivehive-form18892"]();
   
       // $('form.hiveform').on('submit', (e) => {
@@ -399,6 +393,7 @@
   
   <script>
   new THForm('#thrivehive-form18892', '1fda2ea7-a281-4938-8429-83ec3591f85a', {
+    delay: 100,
     action: '//krool.thrivehive.com/webform/directFormHandler',
     mappedInputs: [
       {

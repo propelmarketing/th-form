@@ -261,12 +261,20 @@ import {
 
     onSuccess(e) {
       utils.hideElement(this.$loading)
-      utils.showElement(this.$success)
+      if (typeof this.options.onSuccess === 'function') {
+        this.options.onSuccess(e)
+      } else {
+        utils.showElement(this.$success)
+      }
     }
 
     onError(e) {
       utils.hideElement(this.$loading)
-      utils.showElement(this.$error)
+      if (typeof this.options.onError === 'function') {
+        this.options.onError(e)
+      } else {
+        utils.showElement(this.$error)
+      }
     }
 
     validateAll() {

@@ -4,6 +4,7 @@ import {
   DEFAULTS,
   INPUT_TAGS,
   EXCLUDED_ATTRIBUTES,
+  VALIDATORS,
   MESSAGES
 } from './constants'
 
@@ -358,12 +359,29 @@ import {
     }
 
     validate($input) {
-      const rules = utils.getInputRules($input.name)
       let passed = {
         value: true
       }
-      if (rules) {
-        const { value } = $input
+      const { value, name } = $input
+      const rules = utils.getInputRules($input.name)
+      const attributes = Array.from($input.attributes)
+        .filter(attr => {
+          return Object.keys(VALIDATORS)
+            .includes(attr.nodeName)
+        })
+        .map(attr => {
+          return Object.assign({
+            name: attr.nodeName,
+            value: attr.nodeValue
+          }, VALIDATORS[attr.nodeName])
+        })
+      if (attributes.length) {
+        attributes.map(attr => {
+          passed.value = attr.test(attr.value, value)
+          passed.message = attr.message(attr.value, name)
+        })
+      }
+      if (rules && passed.value) {
         const { pattern, test } = rules
         if (pattern) {
           const regex = new RegExp(pattern)

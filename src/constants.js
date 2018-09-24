@@ -51,3 +51,38 @@ export const INPUT_TAGS = [
 export const EXCLUDED_ATTRIBUTES = [
   'test'
 ]
+
+export const VALIDATORS = {
+  maxlength: {
+    message(val, name) {
+      return `The ${name} field must be ${val} characters or less`
+    },
+    test(val, input) {
+      return input.length <= val
+    }
+  },
+  minlength: {
+    message(val, name) {
+      return `The ${name} field must be at least ${val} characters`
+    },
+    test(val, input) {
+      return input.length >= val
+    }
+  },
+  max: {
+    message(val, name) {
+      return `The ${name} field must be ${val} or less`
+    },
+    test(val, input) {
+      return input <= val
+    }
+  },
+  min: {
+    message(val, name) {
+      return `The ${name} field must be ${val} or more`
+    },
+    test(val, input) {
+      return input >= val
+    }
+  }
+}

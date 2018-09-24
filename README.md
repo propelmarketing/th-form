@@ -18,9 +18,8 @@ new THForm(
         required: true
       },
       {
-        name: 'name',
-        newName: 'first_name',
-        required: true
+        name: 'fname',
+        newName: 'first_name'
       }
     ]
   }
@@ -47,30 +46,69 @@ SCSS is transpiled to CSS via `node-sass` and autoprefixed by `postcss` and `aut
 - stage: 3
 - browsers: ['cover 99.5%', '> 5%']
 
-# Params
+# Parameters
 
 The constructor accepts the following 3 parameters:
 
-### Selector \<string>
+### `selector`
+<code><b>type:</b> string</code>  
+<code><b>default:</b> undefined</code>
 
-Any valid DOM selector for the form to be instrumented.
+DOM selector for the form to be instrumented.
 
-### Form ID \<string>
+### `form_id`
+<code><b>type:</b> string</code>  
+<code><b>default:</b> null</code>
 
 The corresponding ThriveHive form ID.
 
-### Options \<object>
+### `options`
+<code><b>type:</b> object</code>  
+<code><b>default:</b> undefined</code>
 
-- **customValidation** \<boolean>
-  - Default is `false`. The form will be validated via the built-in browser    `ValidityState` API by default, but will use a fallback validation system if `ValidityState` is not supported by the browser, or if the `customValidation` parameter is set to `true`. This option should be used if the customer wants to control the style of the validation messages.
-- **delay** \<number>
-  - Number of milliseconds to delay initialization. This was added to solve a problem created by Wix replacing the DOM when the page loads, which can be worked around by added a 1000ms delay.
-- **mappedInputs** \<array>
-  - An array containing any changes to the form inputs
-- **onSuccess** \<function>
-  - Callback for successful form submission
-- **onError** \<function>
-  - Callback for failed form submission
+Accepts the following values:
+
+- ### **`customValidation`**
+  <code><b>type:</b> boolean</code>  
+  <code><b>default:</b> false</code>
+
+  Default is `false`. The form will be validated via the built-in browser    `ValidityState` API by default, but will use a fallback validation system if `ValidityState` is not supported by the browser, or if the `customValidation` parameter is set to `true`. This option should be used if the customer wants to control the style of the validation messages.
+
+- ### **`delay`**
+  <code><b>type:</b> number</code>  
+  <code><b>default:</b> 0</code>
+  
+  Number of milliseconds to delay initialization. This was added to solve a problem created by Wix replacing the DOM shortly after the page loads, which can be worked around by adding a 1000ms delay.
+
+- ### **`poll`**
+  <code><b>type:</b> boolean</code>  
+  <code><b>default:</b> false</code>
+
+  This option will configure the class to start polling to try to find the form, and will continue until the form is present on the page. This is useful for cases where the form is not present when the DOM loads, and is added asynchronously.
+
+- ### **`pollInterval`**
+  <code><b>type:</b> number</code>  
+  <code><b>default:</b> 1000</code>
+  
+  How frequently to poll in milliseconds
+
+- ### **`mappedInputs`**
+  <code><b>type:</b> array</code>  
+  <code><b>default:</b> undefined</code>
+
+  An array containing any changes to the form inputs
+
+- ### **`onSuccess`**
+  <code><b>type:</b> function</code>  
+  <code><b>default:</b> undefined</code>
+
+  Callback for successful form submission. This will prevent the default message from being shown.
+
+- ### **`onError`**
+  <code><b>type:</b> function</code>  
+  <code><b>default:</b> undefined</code>
+
+  Callback for failed form submission. This will prevent the default message from being shown.
 
 # Development
 
@@ -89,4 +127,3 @@ can be changed via the `PORT` environment variable.
 You may use `npm version` to increment, but since the QA syntax deviates from semver, QA releases must be tagged manually via `git tag -a v1.1.1QA`
 
 Deployment to S3 will begin after pushing a new release tag `git push && git push --tags`, and drafting the release on GitHub.
-

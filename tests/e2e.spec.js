@@ -1,10 +1,9 @@
 const { TESTING_PORT } = require('../utils/env')
-// const utils = require('../src/utils')
+const utils = require('../src/utils')
 
 const base_url = `http://localhost:${TESTING_PORT}`
 
 // jest.setTimeout(40000)
-
 // page.on('console', msg => console.log('PAGE LOG:', msg.text()))
 
 describe('e2e tests', async () => {
@@ -13,7 +12,7 @@ describe('e2e tests', async () => {
   })
 
   describe('unnamed inputs', async () => {
-    test('form rendered', async () => {
+    test('page rendered', async () => {
       await page.goto(`${base_url}/unnamed_inputs.html`)
       await expect(page).toMatch('Test unnamed inputs')
     })
@@ -59,7 +58,7 @@ describe('e2e tests', async () => {
   }
 
   describe('hooks', () => {
-    test('form rendered', async () => {
+    test('page rendered', async () => {
       await page.goto(`${base_url}/hooks.html`)
       await expect(page).toMatch('Test hooks')
     })
@@ -71,6 +70,32 @@ describe('e2e tests', async () => {
       await expect(page).toDisplayDialog(async () => {
         await expect(page).toClick('input[type="submit"]')
       })
+    })
+  })
+
+  describe('async form', async () => {
+    const selector = 'form'
+    test('page rendered', async () => {
+      await page.goto(`${base_url}/async.html`)
+      await expect(page).toMatch('Test async')
+    })
+    test('no form on page', async () => {
+      const form_count = await page.$$eval(selector, result => {
+        return result.length
+      })
+      expect(form_count).toBe(0)
+    })
+    test('form should be added', async () => {
+      await page.waitForSelector(selector)
+      const form_count = await page.$$eval(selector, result => {
+        return result.length
+      })
+      expect(form_count).toBe(1)
+    })
+    test('form should have been given an ID', async () => {
+      await utils.sleep(10)
+      const form_id = await page.$eval(selector, el => el.id)
+      expect(form_id).not.toBe(undefined)
     })
   })
 })

@@ -90,13 +90,16 @@ import {
     getForm() {
       return new Promise((resolve, reject) => {
         if (this.options.poll) {
+          const duration = typeof this.options.pollInterval === 'number'
+            ? this.options.pollInterval
+            : this.DEFAULTS.pollInterval
           const interval = setInterval(() => {
             const $form = this.form()
             if ($form) {
               clearInterval(interval)
               resolve($form)
             }
-          }, DEFAULTS.pollInterval)
+          }, duration)
         } else {
           const $form = this.form()
           resolve($form)

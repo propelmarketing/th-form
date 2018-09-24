@@ -1,20 +1,18 @@
 const { TESTING_PORT } = require('../utils/env')
-const utils = require('../src/utils')
+// const utils = require('../src/utils')
 
 const base_url = `http://localhost:${TESTING_PORT}`
 
-jest.setTimeout(40000)
+// jest.setTimeout(40000)
 
-page.on('console', msg => console.log('PAGE LOG:', msg.text()))
+// page.on('console', msg => console.log('PAGE LOG:', msg.text()))
 
 describe('e2e tests', async () => {
-
   beforeAll(async () => {
     await page.goto(base_url)
   })
 
   describe('unnamed inputs', async () => {
-
     test('form rendered', async () => {
       await page.goto(`${base_url}/unnamed_inputs.html`)
       await expect(page).toMatch('Test unnamed inputs')

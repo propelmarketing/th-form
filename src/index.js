@@ -76,14 +76,42 @@ import {
     }
 
     bindForm() {
-      return new Promise((resolve, reject) => {
-        this.$form = document.querySelector(this.selector)
+      return new Promise(async (resolve, reject) => {
+        this.$form = await this.getForm()
         if (!this.$form) {
           reject(new Error(`No form found with selector "${this.selector}"`))
         } else {
+          this.log(`Bound form with selector "${this.selector}"`)
           resolve(this.$form)
         }
       })
+    }
+
+    getForm() {
+      return new Promise((resolve, reject) => {
+        if (this.options.poll) {
+          const interval = setInterval(() => {
+            const $form = this.form()
+            if ($form) {
+              clearInterval(interval)
+              resolve($form)
+            }
+          }, DEFAULTS.pollInterval)
+        } else {
+          const $form = this.form()
+          resolve($form)
+        }
+      })
+    }
+
+    form() {
+      return document.querySelector(this.selector)
+    }
+
+    log(message) {
+      if (this.options.debug) {
+        console.log(`%cTH -> ${message}`, 'color: teal')
+      }
     }
 
     bindEventListeners($el) {
@@ -217,6 +245,7 @@ import {
         'CA-sess'
       ]
       hidden_inputs.map(name => {
+        this.log(`Found and resolved naming conflict with input name "${name}"`)
         const $input = $form.querySelector(`input[name="${name}"]`)
         if ($input) {
           utils.removeNode($input)
@@ -266,6 +295,7 @@ import {
       } else {
         utils.showElement(this.$success)
       }
+      this.log(`Form submission successful`)
     }
 
     onError(e) {
@@ -275,6 +305,7 @@ import {
       } else {
         utils.showElement(this.$error)
       }
+      this.log(`Form submission error`, e)
     }
 
     validateAll() {

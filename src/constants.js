@@ -1,8 +1,11 @@
 import isEmail from 'validator/lib/isEmail'
 
 export const DEFAULTS = {
-  delay: 0,
   action: '//my.thrivehive.com/webform/directFormHandler',
+  delay: 0,
+  poll: false,
+  pollInterval: 1000,
+  debug: false,
   customValidation: false,
   mappedInputs: []
 }

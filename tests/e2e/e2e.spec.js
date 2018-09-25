@@ -1,6 +1,6 @@
-const utils = require('../src/utils')
-const { TESTING_PORT } = require('../utils/env')
-const { INPUT_RULES, VALIDATORS, MESSAGES } = require('../src/constants')
+const utils = require('../../src/utils')
+const { TESTING_PORT } = require('../../utils/env')
+const { INPUT_RULES, VALIDATORS, MESSAGES } = require('../../src/constants')
 
 const base_url = `http://localhost:${TESTING_PORT}`
 

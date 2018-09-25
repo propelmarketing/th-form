@@ -1,5 +1,6 @@
-const webpack = require('webpack')
 const path = require('path')
+const fs = require('fs')
+const webpack = require('webpack')
 const env = require('./utils/env')
 const postcssPresetEnv = require('postcss-preset-env')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
@@ -15,16 +16,23 @@ const BUNDLE_SUFFIX = '.bundle.js'
 const ENV = env.NODE_ENV
 
 const PUBLIC_PATH = 'examples'
-const OUTPUT_PATH = ENV === 'development'
-  ? 'build'
-  : 'dist'
+const OUTPUT_PATH = ENV === 'production'
+  ? 'dist'
+  : 'build'
 
-const DEVTOOL = ENV === 'development'
-  ? 'cheap-module-eval-source-map'
-  : false
+const DEVTOOL = ENV === 'production'
+  ? false
+  : 'cheap-module-eval-source-map'
+
+const mode = env.NODE_ENV === 'test'
+  ? 'development'
+  : env.NODE_ENV
+
+const templates = fs.readdirSync('./examples')
+  .filter(filename => /\.ejs$/gi.test(filename))
 
 const options = {
-  mode: env.NODE_ENV,
+  mode,
   devtool: DEVTOOL,
   entry: {
     THForm: ENTRY_PATH
@@ -44,7 +52,7 @@ const options = {
       {
         test: /\.css$/,
         use: [
-          // 'style-loader',
+          'style-loader',
           'css-loader'
         ]
       },
@@ -90,49 +98,19 @@ const options = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV)
     }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'examples', 'form.ejs'),
-      filename: 'form.html',
-      chunks: ['THForm'],
-      inject: false,
-      templateParameters(compilation, assets, _options) {
-        return {
-          scriptSrc: `./${OUTPUT_FILENAME}${BUNDLE_SUFFIX}`
+    ...templates.map(template => {
+      const name = template.split('.ejs')[0]
+      return new HtmlWebpackPlugin({
+        template: path.join(__dirname, 'examples', template),
+        filename: `${name}.html`,
+        chunks: ['THForm'],
+        inject: false,
+        templateParameters(compilation, assets, _options) {
+          return {
+            scriptSrc: `./${OUTPUT_FILENAME}${BUNDLE_SUFFIX}`
+          }
         }
-      }
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'examples', 'wix.ejs'),
-      filename: 'wix.html',
-      chunks: ['THForm'],
-      inject: false,
-      templateParameters(compilation, assets, _options) {
-        return {
-          scriptSrc: `./${OUTPUT_FILENAME}${BUNDLE_SUFFIX}`
-        }
-      }
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'examples', 'wix2.ejs'),
-      filename: 'wix2.html',
-      chunks: ['THForm'],
-      inject: false,
-      templateParameters(compilation, assets, _options) {
-        return {
-          scriptSrc: `./${OUTPUT_FILENAME}${BUNDLE_SUFFIX}`
-        }
-      }
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'examples', 'unnamed_inputs.ejs'),
-      filename: 'unnamed.html',
-      chunks: ['THForm'],
-      inject: false,
-      templateParameters(compilation, assets, _options) {
-        return {
-          scriptSrc: `./${OUTPUT_FILENAME}${BUNDLE_SUFFIX}`
-        }
-      }
+      })
     }),
     new WriteFilePlugin()
   ]

@@ -10,6 +10,11 @@ module.exports = {
     browser: true,
     jest: true
   },
+  globals: {
+    page: true,
+    browser: true,
+    jestPuppeteer: true
+  },
   // https://github.com/standard/standard/blob/master/docs/RULES-en.md
   extends: 'standard',
   // add your custom rules here

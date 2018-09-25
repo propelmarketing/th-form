@@ -4,6 +4,7 @@ import {
   DEFAULTS,
   INPUT_TAGS,
   EXCLUDED_ATTRIBUTES,
+  VALIDATORS,
   MESSAGES
 } from './constants'
 
@@ -65,6 +66,7 @@ import {
         this.unbindInlineEvents,
         this.appendToParent,
         this.removeOriginalForm,
+        this.removeNamingConflicts,
         this.addHiddenInputs,
         this.injectStylesheet
       )(this.$form)
@@ -75,14 +77,45 @@ import {
     }
 
     bindForm() {
-      return new Promise((resolve, reject) => {
-        this.$form = document.querySelector(this.selector)
+      return new Promise(async (resolve, reject) => {
+        this.$form = await this.getForm()
         if (!this.$form) {
           reject(new Error(`No form found with selector "${this.selector}"`))
         } else {
+          this.log(`Bound form with selector "${this.selector}"`)
           resolve(this.$form)
         }
       })
+    }
+
+    getForm() {
+      return new Promise((resolve, reject) => {
+        if (this.options.poll) {
+          const duration = typeof this.options.pollInterval === 'number'
+            ? this.options.pollInterval
+            : this.DEFAULTS.pollInterval
+          const interval = setInterval(() => {
+            const $form = this.form()
+            if ($form) {
+              clearInterval(interval)
+              resolve($form)
+            }
+          }, duration)
+        } else {
+          const $form = this.form()
+          resolve($form)
+        }
+      })
+    }
+
+    form() {
+      return document.querySelector(this.selector)
+    }
+
+    log(message) {
+      if (this.options.debug) {
+        console.log(`%cTH -> ${message}`, 'color: teal')
+      }
     }
 
     bindEventListeners($el) {
@@ -207,6 +240,23 @@ import {
       return this
     }
 
+    removeNamingConflicts() {
+      const $form = this.$clone
+      const hidden_inputs = [
+        'meta.form-id',
+        'meta.trackerid',
+        'CA-uid',
+        'CA-sess'
+      ]
+      hidden_inputs.map(name => {
+        const $input = $form.querySelector(`input[name="${name}"]`)
+        if ($input) {
+          this.log(`Found and resolved naming conflict with input name "${name}"`)
+          utils.removeNode($input)
+        }
+      })
+    }
+
     injectStylesheet() {
       this.$clone.parentNode.appendChild(
         utils.htmlToNode(
@@ -249,6 +299,7 @@ import {
       } else {
         utils.showElement(this.$success)
       }
+      this.log(`Form submission successful`)
     }
 
     onError(e) {
@@ -258,6 +309,7 @@ import {
       } else {
         utils.showElement(this.$error)
       }
+      this.log(`Form submission error`, e)
     }
 
     validateAll() {
@@ -307,12 +359,29 @@ import {
     }
 
     validate($input) {
-      const rules = utils.getInputRules($input.name)
       let passed = {
         value: true
       }
-      if (rules) {
-        const { value } = $input
+      const { value, name } = $input
+      const rules = utils.getInputRules($input.name)
+      const attributes = Array.from($input.attributes)
+        .filter(attr => {
+          return Object.keys(VALIDATORS)
+            .includes(attr.nodeName)
+        })
+        .map(attr => {
+          return Object.assign({
+            name: attr.nodeName,
+            value: attr.nodeValue
+          }, VALIDATORS[attr.nodeName])
+        })
+      if (attributes.length) {
+        attributes.map(attr => {
+          passed.value = attr.test(attr.value, value)
+          passed.message = attr.message(attr.value, name)
+        })
+      }
+      if (rules && passed.value) {
         const { pattern, test } = rules
         if (pattern) {
           const regex = new RegExp(pattern)

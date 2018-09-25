@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Custom validation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://api.thrivehive.com/content/WebTrack/catracker.js"></script>
+<script type="text/javascript">
+try {
+  var cat = new CATracker('4a4573812d7642c8ab7fad661c7f8db7');
+  cat.Pause = true;
+  cat.TrackOutboundLinks();
+  cat.PageView();
+} catch (err) {
+  document.write('There has been an error initializing web tracking.');
+}
+</script>
+
+<script src="./THForm.bundle.js"></script>
+<script>
+new THForm('form', 'test', {
+  customValidation: true,
+  mappedInputs: [
+    {
+      name: 'fname',
+      newName: 'first_name',
+      required: true
+    },
+    {
+      name: 'lname',
+      newName: 'last_name',
+      required: true
+    },
+    {
+      name: 'email',
+      required: true
+    },
+    {
+      selector: ':nth-child(5) > .caption > .field-element',
+      newName: 'phone1',
+      required: true
+    },
+    {
+      selector: ':nth-child(6) > .caption > .field-element',
+      newName: 'phone2',
+      required: true
+    },
+    {
+      selector: '.four-digits > .caption > .field-element',
+      newName: 'phone3',
+      required: true
+    }
+  ]
+});
+</script>
+</head>
+
+<body>
+  <h1>Test custom validation</h1>
+
+  <form autocomplete="on" action="/" method="POST">
+    <div>
+      <label class="caption">
+        <input class="field-element field-control" name="fname" x-autocompletetype="given-name" type="text" spellcheck="false" maxlength="30" data-title="First">
+        First Name
+      </label>
+    </div>
+    <div>
+      <label class="caption">
+        <input class="field-element field-control" name="lname" x-autocompletetype="surname" type="text" spellcheck="false" maxlength="30" data-title="Last">
+        Last Name
+      </label>
+    </div>
+    <div>
+      <label class="title" for="email">
+        <input class="field-element" name="email" x-autocompletetype="email" type="text" spellcheck="false" id="email">
+        Email Address <span class="required">*</span>
+      </label>
+    </div>
+    <legend>Phone</legend>
+    <div class="field text three-digits">
+      <label class="caption">
+        <input class="field-element" x-autocompletetype="phone-area-code" type="text" maxlength="3" data-title="Areacode">
+        (###)
+      </label>
+    </div>
+    <div class="field text three-digits">
+      <label class="caption">
+        <input class="field-element" x-autocompletetype="phone-local-prefix" type="text" maxlength="3" data-title="Prefix">
+        ###
+      </label>
+    </div>
+    <div class="field text four-digits">
+      <label class="caption">
+        <input class="field-element" x-autocompletetype="phone-local-suffix" type="text" maxlength="4" data-title="Line">
+        ####
+      </label>
+    </div>
+    <button>Submit</button>
+  </form>
+</body>
+</html>

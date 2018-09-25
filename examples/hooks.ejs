@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Unnamed Inputs</title>
+<title>Hooks</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://api.thrivehive.com/content/WebTrack/catracker.js"></script>
 <script type="text/javascript">
@@ -20,7 +20,12 @@ try {
 <script src="<%= scriptSrc %>"></script>
 <script>
 new THForm('form', 'invalid-id', {
-  customValidation: true,
+  onSuccess() {
+    alert('Success')
+  },
+  onError() {
+    alert('Error')
+  },
   mappedInputs: [{
     name: 'fname',
     newName: 'first_name',
@@ -53,7 +58,7 @@ new THForm('form', 'invalid-id', {
 </head>
 
 <body>
-  <h1>Test unnamed inputs</h1>
+  <h1>Test hooks</h1>
   <form autocomplete="on" action="/" method="POST">
     <div class="field-list clear">
       <fieldset id="name-yui_3_17_2_17_1487104433947_1874" class="form-item fields name required">

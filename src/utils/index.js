@@ -46,7 +46,7 @@ export function htmlToNode(html) {
 }
 
 /**
- * replace dom node with new html
+ * replace DOM node with new html
  *
  * @export
  * @param {*} $el
@@ -57,6 +57,16 @@ export function replaceNode($el, html) {
   const $new_node = htmlToNode(html)
   $el.parentNode.replaceChild($new_node, $el)
   return $new_node
+}
+
+/**
+ * remove a DOM node
+ *
+ * @export
+ * @param {*} $el
+ */
+export function removeNode($el) {
+  return $el.parentNode.removeChild($el)
 }
 
 /**

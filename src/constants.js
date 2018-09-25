@@ -29,16 +29,16 @@ export const INPUT_RULES = {
   email: {
     type: 'email',
     test: isEmail,
-    title: 'Please enter a valid email address'
+    title: 'Please enter a valid email address.'
   },
   phone: {
     type: 'tel',
     pattern: '^[\\d\\s\\(\\)\\-\\+]*$',
-    title: 'Please enter a valid phone number'
+    title: 'Please enter a valid phone number.'
   },
   zip: {
     pattern: '^[\\d\\s\\-]*$',
-    title: 'Please enter a valid postal code'
+    title: 'Please enter a valid postal code.'
   }
 }
 
@@ -55,7 +55,7 @@ export const EXCLUDED_ATTRIBUTES = [
 export const VALIDATORS = {
   maxlength: {
     message(val, name) {
-      return `The ${name} field must be ${val} characters or less`
+      return `The ${name} field must be ${val} characters or less.`
     },
     test(val, input) {
       return input.length <= val
@@ -63,7 +63,7 @@ export const VALIDATORS = {
   },
   minlength: {
     message(val, name) {
-      return `The ${name} field must be at least ${val} characters`
+      return `The ${name} field must be at least ${val} characters.`
     },
     test(val, input) {
       return input.length >= val
@@ -71,7 +71,7 @@ export const VALIDATORS = {
   },
   max: {
     message(val, name) {
-      return `The ${name} field must be ${val} or less`
+      return `The ${name} field must be ${val} or less.`
     },
     test(val, input) {
       return input <= val
@@ -79,7 +79,7 @@ export const VALIDATORS = {
   },
   min: {
     message(val, name) {
-      return `The ${name} field must be ${val} or more`
+      return `The ${name} field must be ${val} or more.`
     },
     test(val, input) {
       return input >= val

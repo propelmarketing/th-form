@@ -249,9 +249,9 @@ import {
         'CA-sess'
       ]
       hidden_inputs.map(name => {
-        this.log(`Found and resolved naming conflict with input name "${name}"`)
         const $input = $form.querySelector(`input[name="${name}"]`)
         if ($input) {
+          this.log(`Found and resolved naming conflict with input name "${name}"`)
           utils.removeNode($input)
         }
       })

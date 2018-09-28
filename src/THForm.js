@@ -358,7 +358,6 @@ class THForm {
           value: false,
           message }
         : this.validate($input)
-      console.log(passed);
       return passed
     } else {
       return {

@@ -5,6 +5,8 @@
 import { html } from 'common-tags'
 import * as utils from '@/utils'
 
+// utils.setScope(window)
+
 function createXHRmock(status) {
   const setRequestHeader = jest.fn()
   const open = jest.fn()
@@ -116,7 +118,7 @@ describe('appendChild', () => {
   })
 })
 
-describe('showElement/hideElement', () => { 
+describe('showElement/hideElement', () => {
   const $one = document.createElement('div')
   const $two = document.createElement('div')
   const $three = document.createElement('div')

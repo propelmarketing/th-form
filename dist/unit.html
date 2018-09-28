@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Async form</title>
+<title>Form for unit tests</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://api.thrivehive.com/content/WebTrack/catracker.js"></script>
 <script type="text/javascript">
@@ -15,39 +15,10 @@ try {
   document.write('There has been an error initializing web tracking.');
 }
 </script>
-
-<script src="./THForm.bundle.js"></script>
-<script>
-new THForm('form', 'test', {
-  poll: true,
-  mappedInputs: [
-    {
-      name: 'fname',
-      newName: 'first_name',
-      required: true
-    },
-    {
-      name: 'lname',
-      newName: 'last_name',
-      required: true
-    },
-    {
-      name: 'email',
-      required: true
-    }
-  ]
-});
-</script>
 </head>
 
 <body>
-  <h1>Test async form</h1>
-</body>
-
-<script>
-setTimeout(() => {
-  const $div = document.createElement('div')
-  $div.innerHTML = `
+  <h1>Form for unit tests</h1>
   <form autocomplete="on" action="/" method="POST">
     <label class="caption">
       <input class="field-element field-control" name="fname" x-autocompletetype="given-name" type="text" spellcheck="false" maxlength="30" data-title="First">
@@ -61,8 +32,5 @@ setTimeout(() => {
     <input class="field-element" name="email" x-autocompletetype="email" type="text" spellcheck="false" id="email">
     <button>Submit</button>
   </form>
-  `
-  document.body.appendChild($div)
-}, 1000)
-</script>
+</body>
 </html>

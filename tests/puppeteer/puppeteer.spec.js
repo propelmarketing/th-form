@@ -7,7 +7,7 @@ const base_url = `http://localhost:${TESTING_PORT}`
 // jest.setTimeout(40000)
 // page.on('console', msg => console.log('PAGE LOG:', msg.text()))
 
-describe('e2e tests', async () => {
+describe('puppeteer tests', async () => {
   beforeAll(async () => {
     await page.goto(base_url)
   })
@@ -46,7 +46,8 @@ describe('e2e tests', async () => {
       const inputs = await page.$$eval(selector, divs => {
         return divs.length
       })
-      expect(inputs).toBe(hidden_inputs.length)
+      // this can either be 4 or 2, if there are no TH cookies
+      expect([hidden_inputs.length, 2]).toContain(inputs)
     })
   })
 

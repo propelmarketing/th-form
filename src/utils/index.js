@@ -4,6 +4,27 @@ import {
   INPUT_RULES
 } from '../constants'
 
+const scope = {
+  scope: null,
+  get document() {
+    const context = this.scope || window
+    return context.document
+  },
+  set window(value) {
+    this.scope = value
+  }
+}
+
+/**
+ * bind custom window instace for jsdom tests
+ *
+ * @export
+ * @param {*} window
+ */
+export function _setScope(win) {
+  scope.window = win
+}
+
 /**
  * get urlencoded form data from DOM node
  *
@@ -37,7 +58,7 @@ export function getInputRules(name, returnEmpty = false) {
  * @returns HTMLElement | NodeList
  */
 export function htmlToNode(html) {
-  const $wrap = document.createElement('div')
+  const $wrap = scope.document.createElement('div')
   $wrap.innerHTML = html
   const $content = $wrap.childNodes
   return $content.length > 1
@@ -164,10 +185,10 @@ export function ready(delay) {
       await sleep(delay)
       resolve()
     }
-    if (/comp|inter|loaded/.test(document.readyState)) {
+    if (/comp|inter|loaded/.test(scope.document.readyState)) {
       complete()
     } else {
-      document.addEventListener('DOMContentLoaded', complete, false)
+      scope.document.addEventListener('DOMContentLoaded', complete, false)
     }
   })
 }
@@ -179,7 +200,7 @@ export function ready(delay) {
  * @returns Boolean
  */
 export function testValidationSupport() {
-  const input = document.createElement('input')
+  const input = scope.document.createElement('input')
   return (
     'validity' in input &&
     'badInput' in input.validity &&

@@ -283,8 +283,16 @@ class THForm {
     return this
   }
 
+  submit() {
+    const response = this.onSubmit()
+    if (typeof this.options.onSubmit === 'function') {
+      this.options.onSubmit(response)
+    }
+    return response
+  }
+
   async onSubmit(e) {
-    e.preventDefault()
+    e && e.preventDefault()
     utils.hideElement(this.$success, this.$error, this.$warning)
     const passed = this.validateAll()
     if (passed) {
@@ -384,10 +392,17 @@ class THForm {
         }, VALIDATORS[attr.nodeName])
       })
     if (attributes.length) {
-      attributes.map(attr => {
-        passed.value = attr.test(attr.value, value)
-        passed.message = attr.message(attr.value, name)
+      const results = attributes.map(attr => {
+        return Object.assign({}, attr, {
+          value: attr.test(attr.value, value),
+          message: attr.message(attr.value, name)
+        })
       })
+      const failure = results.find(result => !result.value)
+      if (failure) {
+        passed.value = failure.value
+        passed.message = failure.message
+      }
     }
     if (rules && passed.value) {
       const { pattern, test } = rules

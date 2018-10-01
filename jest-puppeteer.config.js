@@ -7,7 +7,7 @@ module.exports = {
     launchTimeout: 35000
   },
   launch: {
-    headless: false,
+    headless: true,
     devtools: true,
     // slowMo: 10,
     args: [ '--disable-web-security' ]

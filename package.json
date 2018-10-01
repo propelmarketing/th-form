@@ -6,9 +6,9 @@
   "scripts": {
     "build": "NODE_ENV=production node utils/build.js",
     "start": "node utils/dev.js",
-    "test": "jest",
-    "puppeteer": "jest tests/puppeteer",
-    "testdebug": "node --inspect-brk node_modules/.bin/jest --runInBand"
+    "test": "jest --testPathIgnorePatterns puppeteer --runInBand",
+    "testdebug": "node --inspect-brk jest --runInBand",
+    "puppeteer": "jest tests/puppeteer --runInBand"
   },
   "repository": {
     "type": "git",

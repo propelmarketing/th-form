@@ -36,6 +36,10 @@ new THForm('form', 'test', {
       required: true
     },
     {
+      name: 'test',
+      required: true,
+    },
+    {
       selector: ':nth-child(5) > .caption > .field-element',
       newName: 'phone1',
       required: true
@@ -69,6 +73,12 @@ new THForm('form', 'test', {
       <label class="caption">
         <input class="field-element field-control" name="lname" x-autocompletetype="surname" type="text" spellcheck="false" maxlength="30" data-title="Last">
         Last Name
+      </label>
+    </div>
+    <div>
+      <label class="caption">
+        <input class="field-element field-control" name="test" minlength="2" maxlength="4">
+        Length
       </label>
     </div>
     <div>

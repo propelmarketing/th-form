@@ -19,18 +19,19 @@ try {
 
 <body>
   <h1>Form for unit tests</h1>
-  <form autocomplete="on" action="/" method="POST">
+  <form autocomplete="on" action="/" method="POST" onSubmit="alert('submit')">
     <label class="caption">
-      <input class="field-element field-control" name="fname" x-autocompletetype="given-name" type="text" spellcheck="false" maxlength="30" data-title="First">
+      <input name="fname" type="text" maxlength="30">
       First Name
     </label>
     <label class="caption">
-      <input class="field-element field-control" name="lname" x-autocompletetype="surname" type="text" spellcheck="false" maxlength="30" data-title="Last">
+      <input name="lname" type="text" maxlength="30">
       Last Name
     </label>
     <label class="title" for="email">Email Address <span class="required">*</span></label>
     <input class="field-element" name="email" x-autocompletetype="email" type="text" spellcheck="false" id="email">
-    <button>Submit</button>
+    <input type="hidden" name="meta.form-id" value="test">
+    <button onClick="alert('click')">Submit</button>
   </form>
 </body>
 </html>

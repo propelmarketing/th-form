@@ -98,6 +98,12 @@ Accepts the following values:
 
   An array containing any changes to the form inputs
 
+- ### **`onSubmit`**
+  <code><b>type:</b> function</code>  
+  <code><b>default:</b> undefined</code>
+
+  Callback for form submission. This will fire anytime the form is submitted, regardless of response.
+
 - ### **`onSuccess`**
   <code><b>type:</b> function</code>  
   <code><b>default:</b> undefined</code>

@@ -1,6 +1,6 @@
 {
   "name": "th-form",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Script for instrumenting lead forms on ThriveHive customers' websites",
   "main": "src/THForm.js",
   "scripts": {

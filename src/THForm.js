@@ -37,7 +37,7 @@ class THForm {
       this.setValidationMode()
       this.takeControlOfForm()
     } catch (error) {
-      console.log(error.message)
+      this.log(error.message)
     }
   }
 
@@ -68,6 +68,7 @@ class THForm {
       this.cloneForm,
       this.setFormAttributes,
       this.resetRequired,
+      this.removeHiddenInputs,
       this.mapInputs,
       this.convertInputs,
       this.addMessages,
@@ -76,7 +77,6 @@ class THForm {
       this.unbindInlineEvents,
       this.appendToParent,
       this.removeOriginalForm,
-      this.removeNamingConflicts,
       this.addHiddenInputs,
       this.injectStylesheet
     )(this.$form)
@@ -183,6 +183,14 @@ class THForm {
     return $el
   }
 
+  removeHiddenInputs($el) {
+    $el.querySelectorAll('[type="hidden"]')
+      .forEach($input => {
+        utils.removeNode($input)
+      })
+    return $el
+  }
+
   mapInputs($el) {
     const mappedInputs = this.options.mappedInputs
     if (mappedInputs.length) {
@@ -245,23 +253,6 @@ class THForm {
     $util.AddHiddenFieldInForm('meta.form-id', $form.id, this.form_id)
     $util.AddHiddenFieldInForm('meta.trackerid', $form.id, tracker_id)
     return this
-  }
-
-  removeNamingConflicts() {
-    const $form = this.$clone
-    const hidden_inputs = [
-      'meta.form-id',
-      'meta.trackerid',
-      'CA-uid',
-      'CA-sess'
-    ]
-    hidden_inputs.map(name => {
-      const $input = $form.querySelector(`input[name="${name}"]`)
-      if ($input) {
-        this.log(`Found and resolved naming conflict with input name "${name}"`)
-        utils.removeNode($input)
-      }
-    })
   }
 
   injectStylesheet() {

@@ -43,7 +43,7 @@ export const INPUT_RULES = {
 }
 
 export const INPUT_TAGS = [
-  'input',
+  'input:not([type="hidden"])',
   'select',
   'textarea'
 ]

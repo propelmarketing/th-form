@@ -24,9 +24,9 @@ const DEVTOOL = ENV === 'production'
   ? false
   : 'cheap-module-eval-source-map'
 
-const mode = env.NODE_ENV === 'test'
+const mode = ENV === 'test'
   ? 'development'
-  : env.NODE_ENV
+  : ENV
 
 const templates = fs.readdirSync('./examples')
   .filter(filename => /\.ejs$/gi.test(filename))
@@ -96,7 +96,7 @@ const options = {
     new CleanWebpackPlugin([OUTPUT_PATH]),
     // expose and write the allowed env consts on the compiled bundle
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify(ENV)
     }),
     ...templates.map(template => {
       const name = template.split('.ejs')[0]

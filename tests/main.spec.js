@@ -117,7 +117,7 @@ describe('async form', () => {
   })
 
   test('should poll for selector and bind it after it is added to the DOM', async () => {
-    await utils.sleep(delay + 600)
+    await utils.sleep(delay + 700)
     const $form = document.querySelector(selector)
     expect($form.parentNode.className).toBe('th-form-wrapper')
   })

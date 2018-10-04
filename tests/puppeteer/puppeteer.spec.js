@@ -120,6 +120,7 @@ describe('puppeteer tests', async () => {
     })
     test('invalid email', async () => {
       for (let key in user2) {
+        await page.waitForSelector(`[name="${key}"]`)
         await page.focus(`[name="${key}"]`)
         await page.keyboard.type(`${user2[key]}`)
       }

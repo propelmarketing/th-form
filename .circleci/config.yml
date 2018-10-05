@@ -72,7 +72,8 @@ jobs:
             aws s3 cp ~/th-form/dist/THForm.bundle.js s3://prod-th-form/THForm.js --acl public-read
   build-and-test:
     docker:
-      - image: thrivehive/serverless-build-ami:latest
+      - image: circleci/openjdk:latest
+      - command: ./scripts/init.sh
     working_directory: ~/th-form
     steps:
       - checkout

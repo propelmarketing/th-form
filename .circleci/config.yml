@@ -80,10 +80,6 @@ jobs:
           name: Init
           command: bash ./scripts/init.sh
       - run:
-          name: Update NPM
-          command: |
-            npm install -g npm@latest
-      - run:
           name: Install Dependencies
           command: |
             npm install

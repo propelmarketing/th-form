@@ -73,10 +73,12 @@ jobs:
   build-and-test:
     docker:
       - image: circleci/openjdk:latest
-        command: bash ./scripts/init.sh
     working_directory: ~/th-form
     steps:
       - checkout
+      - run:
+          name: Init
+          command: bash ./scripts/init.sh
       - run:
           name: Update NPM
           command: |

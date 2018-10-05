@@ -90,7 +90,7 @@ jobs:
             npm run build
       - run:
           name: Run Linter
-          command: npm lint
+          command: npm run lint
       - run:
           name: Run Sonar analysis & publish results
           command: bash ./scripts/devops/sonar.sh

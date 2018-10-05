@@ -2,7 +2,7 @@ version: 2
 jobs:
   release-staging:
     docker:
-      - image: circleci/node:8.10.0
+      - image: thrivehive/serverless-build-ami:latest
     working_directory: ~/th-form
     steps:
       - checkout

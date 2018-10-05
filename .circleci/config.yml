@@ -79,7 +79,7 @@ jobs:
       - run:
           name: Update NPM
           command: |
-            sudo npm install -g npm@latest
+            npm install -g npm@latest
       - run:
           name: Install Dependencies
           command: |
@@ -98,7 +98,7 @@ jobs:
             chmod +x /home/circleci/th-form/node_modules/sonar-scanner/bin/sonar-scanner
       - run:
           name: Run Sonar analysis & publish results
-          command: sudo bash ./scripts/sonar.sh
+          command: bash ./scripts/sonar.sh
 
 workflows:
   version: 2

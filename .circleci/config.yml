@@ -93,7 +93,7 @@ jobs:
           command: npm run lint
       - run:
           name: Run Sonar analysis & publish results
-          command: bash ./scripts/devops/sonar.sh
+          command: bash ./scripts/sonar.sh
 
 workflows:
   version: 2

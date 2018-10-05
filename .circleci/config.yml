@@ -92,6 +92,9 @@ jobs:
           name: Run Linter
           command: npm run lint
       - run:
+          name: Permissions
+          command: chmod -x ./scripts/sonar.sh
+      - run:
           name: Run Sonar analysis & publish results
           command: bash ./scripts/sonar.sh
 

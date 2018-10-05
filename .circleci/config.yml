@@ -70,6 +70,30 @@ jobs:
           name: Upload to S3
           command: |
             aws s3 cp ~/th-form/dist/THForm.bundle.js s3://prod-th-form/THForm.js --acl public-read
+  build-and-test:
+    docker:
+      - image: circleci/node:8.10.0
+    working_directory: ~/th-form
+    steps:
+      - checkout
+      - run:
+          name: Update NPM
+          command: |
+            sudo npm install -g npm@latest
+      - run:
+          name: Install Dependencies
+          command: |
+            npm install
+      - run:
+          name: NPM Build
+          command: |
+            npm run build
+      - run:
+          name: Run Linter
+          command: npm lint
+      - run:
+          name: Run Sonar analysis & publish results
+          command: bash ./scripts/devops/sonar.sh
 
 workflows:
   version: 2

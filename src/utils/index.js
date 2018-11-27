@@ -215,3 +215,28 @@ export function testValidationSupport() {
     'valueMissing' in input.validity
   )
 }
+
+export function isDetached(element) {
+  const $parent = element.parentNode
+  if ($parent === document) {
+    return false
+  } else if ($parent === null) {
+    return true
+  } else {
+    return isDetached($parent)
+  }
+}
+
+export function onRemove(element, callback) {
+  const observer = new MutationObserver(() => {
+    if (isDetached(element)) {
+      observer.disconnect()
+      callback()
+    }
+  })
+
+  observer.observe(document, {
+    childList: true,
+    subtree: true
+  })
+}

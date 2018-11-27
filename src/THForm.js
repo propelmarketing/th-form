@@ -77,6 +77,7 @@ class THForm {
       this.unbindInlineEvents,
       this.appendToParent,
       this.removeOriginalForm,
+      this.initMutationObserver,
       this.addHiddenInputs,
       this.injectStylesheet
     )(this.$form)
@@ -113,6 +114,15 @@ class THForm {
         resolve($form)
       }
     })
+  }
+
+  initMutationObserver() {
+    if (this.options.poll) {
+      utils.onRemove(this.$clone, () => {
+        this.init()
+      })
+      return this
+    }
   }
 
   form() {

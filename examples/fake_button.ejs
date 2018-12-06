@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Fake button</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://api.thrivehive.com/content/WebTrack/catracker.js"></script>
+<script type="text/javascript">
+try {
+  var cat = new CATracker('4a4573812d7642c8ab7fad661c7f8db7');
+  cat.Pause = true;
+  cat.TrackOutboundLinks();
+  cat.PageView();
+} catch (err) {
+  document.write('There has been an error initializing web tracking.');
+}
+</script>
+<style>
+.fake {
+  display: inline-block;
+  padding: 10px;
+  background: grey;
+}
+</style>
+</head>
+
+<body>
+  <h1>Fake submit button test</h1>
+  <form autocomplete="on" action="/" onSubmit="alert('submit')">
+    <label class="caption">
+      <input name="fname" type="text" maxlength="30">
+      First Name
+    </label>
+    <label class="caption">
+      <input name="lname" type="text" maxlength="30">
+      Last Name
+    </label>
+    <label for="email">Email Address <span class="required">*</span></label>
+    <input name="email" type="text" id="email">
+    <input type="hidden" name="meta.form-id" value="test">
+    <div class="submit">
+      <span class="fake">Submit</span>
+      <input type="submit" style="display: none" value="Submit" />
+    </div>
+  </form>
+</body>
+</html>

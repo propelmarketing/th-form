@@ -137,7 +137,18 @@ class THForm {
 
   bindEventListeners($el) {
     $el.addEventListener('submit', this.onSubmit.bind(this))
+    if (this.options.button) {
+      $el.querySelector(this.options.button)
+        .addEventListener('click', this.clickFakeSubmitButton.bind(this))
+    }
     return $el
+  }
+
+  async clickFakeSubmitButton() {
+    const $fake = utils.htmlToNode(`<input type="submit" value="" style="display: none">`)
+    this.$clone.appendChild($fake)
+    $fake.click()
+    utils.removeNode($fake)
   }
 
   unbindInlineEvents($el) {

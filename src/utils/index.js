@@ -216,6 +216,13 @@ export function testValidationSupport() {
   )
 }
 
+/**
+ * check if a node was removed from page
+ *
+ * @export
+ * @param {*} element
+ * @returns Boolean
+ */
 export function isDetached(element) {
   const $parent = element.parentNode
   if ($parent === document) {
@@ -227,6 +234,13 @@ export function isDetached(element) {
   }
 }
 
+/**
+ * watch for node to be removed from dom
+ *
+ * @export
+ * @param {*} element
+ * @param {*} callback
+ */
 export function onRemove(element, callback) {
   const observer = new MutationObserver(() => {
     if (isDetached(element)) {
@@ -234,7 +248,6 @@ export function onRemove(element, callback) {
       callback()
     }
   })
-
   observer.observe(document, {
     childList: true,
     subtree: true

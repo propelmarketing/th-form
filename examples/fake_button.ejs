@@ -22,6 +22,7 @@ try {
   background: grey;
 }
 </style>
+<script src="<%= scriptSrc %>"></script>
 </head>
 
 <body>
@@ -44,4 +45,14 @@ try {
     </div>
   </form>
 </body>
+<script>
+new THForm('form', 'test', {
+  debug: true,
+  button: '.fake',
+  mappedInputs: [{
+    name: 'email',
+    required: true
+  }]
+});
+</script>
 </html>

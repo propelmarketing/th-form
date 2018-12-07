@@ -118,8 +118,15 @@ Accepts the following values:
 
 # Development
 
-Start webpack dev server by running `npm start`, and go to the port specified, default is 6600. This
-can be changed via the `PORT` environment variable.
+Start webpack dev server by running `npm start`, and go to the port specified, default is 6600.
+
+```bash
+npm start
+```
+Custom port:
+```bash
+PORT=6002 npm start
+```
 
 # Production
 
@@ -130,6 +137,22 @@ can be changed via the `PORT` environment variable.
 | QA          | v1.1.1QA | qa-th-form   |
 | Production  | v1.1.1   | prod-th-form |
 
-You may use `npm version` to increment, but since the QA syntax deviates from semver, QA releases must be tagged manually via `git tag -a v1.1.1QA`
+Use `npm version` to increment, but since the QA syntax deviates from semver, QA releases must be tagged manually via `git tag -a v1.1.1QA`
 
 Deployment to S3 will begin after pushing a new release tag `git push && git push --tags`, and drafting the release on GitHub.
+
+## Testing
+
+The project uses Jest for regular unit tests, and jest-puppeteer for UI unit testing.
+
+Run unit tests:
+```bash
+npm test
+```
+Run UI tests:
+```bash
+npm run puppeteer
+```
+
+## Versioning
+This project uses [semver](https://semver.org/). Use `npm version major|minor|patch -m <message>` to increment version depending on the changes.

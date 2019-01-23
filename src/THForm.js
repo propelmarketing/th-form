@@ -129,15 +129,16 @@ class THForm {
     return this.document.querySelector(this.selector)
   }
 
-  log(message) {
+  log(message, ...args) {
     if (this.options.debug) {
-      console.log(`%cTH -> ${message}`, 'color: teal')
+      console.log(`%cTH -> ${message}`, 'color: teal', ...args)
     }
   }
 
   bindEventListeners($el) {
     $el.addEventListener('submit', this.onSubmit.bind(this))
     if (this.options.button) {
+      this.log('binding custom button', $el.querySelector(this.options.button))
       $el.querySelector(this.options.button)
         .addEventListener('click', this.clickFakeSubmitButton.bind(this))
     }
@@ -145,6 +146,7 @@ class THForm {
   }
 
   async clickFakeSubmitButton() {
+    this.log('clicked fake button')
     const $fake = utils.htmlToNode(`<input type="submit" value="" style="display: none">`)
     this.$clone.appendChild($fake)
     $fake.click()
@@ -305,9 +307,11 @@ class THForm {
 
   async onSubmit(e) {
     e && e.preventDefault()
+    this.log('submitting form')
     utils.hideElement(this.$success, this.$error, this.$warning)
     const passed = this.validateAll()
     if (passed) {
+      this.log('validated')
       const data = utils.getFormData(this.$clone)
       utils.showElement(this.$loading)
       return utils.request(this.options.action, 'POST', data)

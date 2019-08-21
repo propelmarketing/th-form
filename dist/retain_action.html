@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Fake button</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://api.thrivehive.com/content/WebTrack/catracker.js"></script>
+  <script type="text/javascript">
+    try {
+      var cat = new CATracker('4a4573812d7642c8ab7fad661c7f8db7');
+      cat.Pause = true;
+      cat.TrackOutboundLinks();
+      cat.PageView();
+    } catch (err) {
+      document.write('There has been an error initializing web tracking.');
+    }
+  </script>
+  <style>
+    .fake {
+      display: inline-block;
+      padding: 10px;
+      background: grey;
+    }
+  </style>
+  <script src="./THForm.bundle.js"></script>
+</head>
+
+<body>
+  <h1>Retain existing action</h1>
+  <form method="post" id="m3592" class="module form" data-url="?m=m3592" data-req="form" data-track-action="custom_form"
+    onsubmit="return console.log('retained', this);" role="form" style="border: 2px solid red;">
+    <div class="fields clear">
+      <div class="field w100 "> <label for="m3592_field_0">Name*</label> <input type="text" name="field_0"
+          id="m3592_field_0" placeholder="" data-required="true"> </div>
+      <div class="field w100 "> <label for="m3592_field_1">Email*</label> <input type="text" data-type="email"
+          name="field_1" id="m3592_field_1" placeholder="" data-required="true"> </div>
+      <div class="field w100 "> <label for="m3592_field_2">Message</label> <textarea name="field_2" id="m3592_field_2"
+          placeholder=""></textarea> </div>
+      <div class="hidden" tabindex="-1"> <input type="text" id="spam_protection" name="spam_protection"> </div>
+    </div>
+    <div class="optins clear"> </div>
+    <div id="errors_m3592"> </div> <input type="hidden" name="form_m3592" value="1"> <input type="submit" class="button"
+      value="Submit">
+  </form>
+</body>
+<script>
+  new THForm('form', '22a6d114-2d13-440e-bc9a-296f7dbf3cfb', {
+    debug: true,
+    retain: true,
+    mappedInputs: [{
+      name: 'email',
+      required: true
+    }]
+  });
+</script>
+
+</html>

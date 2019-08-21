@@ -176,7 +176,7 @@ describe('ready', () => {
   })
 })
 
-describe('request', async () => {
+describe('request', () => {
   test('success', async () => {
     createXHRmock(200)
     const response = await utils.request('/', 'POST', { test: true })

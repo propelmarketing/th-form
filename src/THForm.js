@@ -331,6 +331,18 @@ class THForm {
   async submitRetained() {
     this.log('submitting retained action')
     const data = utils.getFormData(this.$clone)
+      .split('&')
+      .map((field) => {
+        const [currentKey, value] = field.split('=')
+        const { mappedInputs } = this.options
+        const keyMapping = mappedInputs && mappedInputs
+          .find((mapping) => mapping.newName === currentKey)
+        const key = keyMapping
+          ? keyMapping.name
+          : currentKey
+        return [key, value].join('=')
+      })
+      .join('&')
     const url = `${window.location.href}${this.$form.dataset.url}`
     return utils.request(url, 'POST', data)
       .then((e) => {

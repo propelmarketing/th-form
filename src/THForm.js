@@ -182,7 +182,9 @@ class THForm {
   }
 
   setFormAttributes($el) {
-    $el.setAttribute('action', this.options.action)
+    if (!this.options.retain) {
+      $el.setAttribute('action', this.options.action)
+    }
     const action = this.options.customValidation
       ? 'set'
       : 'remove'
@@ -207,10 +209,12 @@ class THForm {
   }
 
   removeHiddenInputs($el) {
-    $el.querySelectorAll('[type="hidden"]')
-      .forEach($input => {
-        utils.removeNode($input)
-      })
+    if (!this.options.retain) {
+      $el.querySelectorAll('[type="hidden"]')
+        .forEach($input => {
+          utils.removeNode($input)
+        })
+    }
     return $el
   }
 
@@ -324,8 +328,25 @@ class THForm {
     }
   }
 
-  onSuccess(e) {
-    utils.hideElement(this.$loading)
+  async submitRetained() {
+    this.log('submitting retained action')
+    const data = utils.getFormData(this.$clone)
+    const url = `${window.location.href}${this.$form.dataset.url}`
+    return utils.request(url, 'POST', data)
+      .then((e) => {
+        utils.hideElement(this.$loading)
+      })
+      .catch((e) => {
+        this.onError(e)
+      })
+  }
+
+  async onSuccess(e) {
+    if (this.options.retain) {
+      await this.submitRetained()
+    } else {
+      utils.hideElement(this.$loading)
+    }
     if (typeof this.options.onSuccess === 'function') {
       this.options.onSuccess(e)
     } else {
